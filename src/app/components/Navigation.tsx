@@ -5,10 +5,11 @@ const Navigation: React.FC = () => {
     <nav style={styles.navbar}>
       <div style={styles.logo}>Diabetes 360</div>
       <ul style={styles.navLinks}>
-        <li><Link href="/dashboard" style={styles.link}>Dashboard</Link></li>
-        <li><Link href="/exercise-tracker" style={styles.link}>Exercise</Link></li>
-        <li><Link href="/meal-plan" style={styles.link}>Meal Plan</Link></li>
-        <li><Link href="/medication-tracker" style={styles.link}>Medication</Link></li>
+        <li><Link href="/" style={styles.link}>🏠 Home</Link></li>
+        <li><Link href="/dashboard" style={styles.link}>📊 Dashboard</Link></li>
+        <li><Link href="/exercise-tracker" style={styles.link}>🏋️ Exercise</Link></li>
+        <li><Link href="/meal-plan" style={styles.link}>🍽️ Meal Plan</Link></li>
+        <li><Link href="/med-tracker" style={styles.link}>💊 Medication</Link></li>
       </ul>
     </nav>
   );
