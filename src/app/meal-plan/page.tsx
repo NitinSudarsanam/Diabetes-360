@@ -4,6 +4,19 @@ import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 
+// AI Logic (commented out for now to avoid excess api calls)
+/*
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const genAI = new GoogleGenerativeAI("AIzaSyD3kYFbijJONoKyiiBFsBP5UTL1Qxb-aiY");
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+const prompt = "Generate a list of healthy meal ideas for a week for a person with diabetes and format it as a json array. It should be formatted as follows for each day: { day: 'Monday', meals: { breakfast: 'Oatmeal with fresh berries and almonds', lunch: 'Grilled chicken with quinoa and steamed broccoli', dinner: 'Baked salmon with sweet potato and asparagus' } }. Don't put any quotation marks around the file but do put quotation marks around property names and use [] brackets at the highest level.";
+
+const breakfastText = await model.generateContent(prompt);
+console.log(breakfastText.response.text());
+const genMealPlan = JSON.parse(breakfastText.response.text());*/
+
 // Styled Components
 
 const Container = styled.div`
@@ -99,6 +112,7 @@ const Button = styled.button`
 
 const MealPlanPage: NextPage = () => {
   // Sample 7-day meal plan data
+  // const sampleMealPlan = genMealPlan; 
   const sampleMealPlan = [
     {
       day: "Monday",
@@ -159,6 +173,7 @@ const MealPlanPage: NextPage = () => {
   ];
 
   // State to manage meal plan
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [mealPlan, setMealPlan] = useState<any[]>([]);
 
   // Hydration fix: useEffect to handle client-side code
