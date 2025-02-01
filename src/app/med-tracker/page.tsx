@@ -1,231 +1,112 @@
 "use client"
 
-import React, { useState, useEffect } from 'react';
-import { NextPage } from 'next';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import { Pill, Plus, Check, X } from 'lucide-react';
 import Navigation from '@/app/components/Navigation';
-import ArcadeButton from '@/app/components/ArcadeButton';
 
-// Styled Components
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #111;
-  color: #fff;
-  font-family: 'Arial', sans-serif;
-  padding: 40px;
-`;
+const MedicationTrackerPage = () => {
+  const [medications, setMedications] = useState([
+    { id: 1, name: 'Metformin', dosage: '500mg', time: '08:00', taken: false },
+    { id: 2, name: 'Insulin', dosage: '10 units', time: '12:00', taken: false }
+  ]);
 
-const Header = styled.header`
-  background: linear-gradient(135deg, #ff66cc, #00ccff);
-  width: 100%;
-  padding: 20px;
-  text-align: center;
-  font-size: 2em;
-  font-weight: bold;
-  border-bottom: 5px solid #fff;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-`;
+  const [newMed, setNewMed] = useState({ name: '', dosage: '', time: '' });
 
-const FormContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #222;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-  margin-top: 20px;
-  width: 100%;
-  max-width: 500px;
-`;
-
-const InputField = styled.input`
-  width: 80%;
-  padding: 12px;
-  margin: 10px 0;
-  background-color: #444;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  font-size: 1.2em;
-`;
-
-const Button = styled.button`
-  background-color: #ff3399;
-  color: white;
-  border: none;
-  padding: 12px 30px;
-  font-size: 1.5em;
-  cursor: pointer;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: #00ccff;
-    transform: scale(1.05);
-  }
-`;
-
-const MedicationList = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 30px;
-`;
-
-const MedicationItem = styled.div`
-  background: #222;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 10px;
-  width: 80%;
-  max-width: 500px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const MedicationText = styled.p`
-  color: #fff;
-  font-size: 1.2em;
-`;
-
-const EditDeleteButton = styled.button`
-  background-color: #ff3399;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  font-size: 1em;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: #00ccff;
-    transform: scale(1.05);
-  }
-
-  &:first-child {
-    margin-right: 10px;
-  }
-`;
-
-const MedicationTrackerPage: NextPage = () => {
-  // State for managing the medication list
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [medications, setMedications] = useState<any[]>([]);
-
-  // State for input form
-  const [medicationName, setMedicationName] = useState('');
-  const [dose, setDose] = useState('');
-  const [frequency, setFrequency] = useState('');
-
-  // Hydration fix: useEffect to delay client-specific logic
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true); // Set client state after component mounts
-  }, []);
-
-  // Add new medication
-  const addMedication = () => {
-    if (!medicationName || !dose || !frequency) {
-      alert('Please fill in all fields');
-      return;
-    }
-
-    const newMedication = {
-      id: new Date().getTime(),
-      medicationName,
-      dose,
-      frequency,
-    };
-
-    setMedications([...medications, newMedication]);
-
-    // Clear form
-    setMedicationName('');
-    setDose('');
-    setFrequency('');
+  const handleAddMedication = () => {
+    setMedications([...medications, { ...newMed, id: Date.now(), taken: false }]);
+    setNewMed({ name: '', dosage: '', time: '' });
   };
 
-  // Delete medication
-  const deleteMedication = (id: number) => {
-    setMedications(medications.filter(med => med.id !== id));
+  const toggleTaken = (id: number) => {
+    setMedications(medications.map(med =>
+      med.id === id ? { ...med, taken: !med.taken } : med
+    ));
   };
-
-  // Edit medication (optional, can implement later)
-  const editMedication = (id: number) => {
-    const medicationToEdit = medications.find(med => med.id === id);
-    if (medicationToEdit) {
-      setMedicationName(medicationToEdit.medicationName);
-      setDose(medicationToEdit.dose);
-      setFrequency(medicationToEdit.frequency);
-
-      // Remove it from the list temporarily
-      deleteMedication(id);
-    }
-  };
-
-  // Prevent rendering until mounted on client side
-  if (!isClient) {
-    return <div>Loading...</div>;
-  }
 
   return (
-    <Container>
+    <div className="min-h-screen bg-sky-400 p-8 text-white font-mono">
       <Navigation />
-      <Header>Medication Tracker</Header>
+      <h1 className="text-4xl font-bold text-center mb-8" 
+          style={{ textShadow: '3px 3px 0px #0369a1', padding: '80px 20px 20px' }}>
+        POWER-UP TRACKER
+      </h1>
 
-      <FormContainer>
-        <InputField
-          type="text"
-          placeholder="Medication Name"
-          value={medicationName}
-          onChange={(e) => setMedicationName(e.target.value)}
-        />
-        <InputField
-          type="text"
-          placeholder="Dose (e.g., 50mg)"
-          value={dose}
-          onChange={(e) => setDose(e.target.value)}
-        />
-        <InputField
-          type="text"
-          placeholder="Frequency (e.g., 2x/day)"
-          value={frequency}
-          onChange={(e) => setFrequency(e.target.value)}
-        />
-        <ArcadeButton onClick={addMedication}>Add Medication</ArcadeButton>
-      </FormContainer>
+      {/* Add New Medication */}
+      <div className="max-w-2xl mx-auto mb-8" style={{
+        background: 'linear-gradient(#fcd34d, #f59e0b)',
+        border: '4px solid #fff',
+        boxShadow: '4px 4px 0px #92400e',
+        borderRadius: '8px',
+        opacity: 0.9
+      }}>
+        <div className="p-6 space-y-4">
+          <h2 className="text-xl font-bold mb-4">Add New Power-Up</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <input
+              type="text"
+              placeholder="Name"
+              className="p-2 rounded text-black"
+              value={newMed.name}
+              onChange={(e) => setNewMed({...newMed, name: e.target.value})}
+            />
+            <input
+              type="text"
+              placeholder="Dosage"
+              className="p-2 rounded text-black"
+              value={newMed.dosage}
+              onChange={(e) => setNewMed({...newMed, dosage: e.target.value})}
+            />
+            <input
+              type="time"
+              className="p-2 rounded text-black"
+              value={newMed.time}
+              onChange={(e) => setNewMed({...newMed, time: e.target.value})}
+            />
+          </div>
+          <button
+            onClick={handleAddMedication}
+            className="flex items-center justify-center w-full p-2 rounded font-bold"
+            style={{
+              background: 'linear-gradient(#34d399, #059669)',
+              border: '2px solid #fff',
+              boxShadow: '2px 2px 0px #065f46'
+            }}
+          >
+            <Plus className="w-5 h-5 mr-2" /> Add Power-Up
+          </button>
+        </div>
+      </div>
 
-      <MedicationList>
-        {medications.map((med) => (
-          <MedicationItem key={med.id}>
-            <div>
-              <MedicationText>
-                <strong>{med.medicationName}</strong>
-                <br />
-                <small>{med.dose} - {med.frequency}</small>
-              </MedicationText>
+      {/* Medication List */}
+      <div className="max-w-2xl mx-auto space-y-4">
+        {medications.map(med => (
+          <div
+            key={med.id}
+            className="p-4 rounded flex items-center justify-between"
+            style={{
+              background: med.taken ? 'linear-gradient(#34d399, #059669)' : 'linear-gradient(#60a5fa, #2563eb)',
+              border: '3px solid #fff',
+              boxShadow: '3px 3px 0px #1e40af',
+              opacity: 0.9
+            }}
+          >
+            <div className="flex items-center">
+              <Pill className="w-6 h-6 mr-3" />
+              <div>
+                <h3 className="font-bold">{med.name}</h3>
+                <p className="text-sm">{med.dosage} - {med.time}</p>
+              </div>
             </div>
-
-            <div>
-              <EditDeleteButton onClick={() => editMedication(med.id)}>
-                Edit
-              </EditDeleteButton>
-              <EditDeleteButton onClick={() => deleteMedication(med.id)}>
-                Delete
-              </EditDeleteButton>
-            </div>
-          </MedicationItem>
+            <button
+              onClick={() => toggleTaken(med.id)}
+              className={`p-2 rounded ${med.taken ? 'bg-green-700' : 'bg-blue-700'}`}
+            >
+              {med.taken ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
+            </button>
+          </div>
         ))}
-      </MedicationList>
-    </Container>
+      </div>
+    </div>
   );
 };
 
