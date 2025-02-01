@@ -4,13 +4,14 @@ import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 import Navigation from '@/app/components/Navigation';
+import ArcadeButton from '@/app/components/ArcadeButton';
 
 // Styled Components
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #111;
+  background-color: transparent;
   color: #fff;
   font-family: 'Arial', sans-serif;
   padding: 40px;
@@ -49,7 +50,9 @@ const InfoText = styled.p`
 `;
 
 const Button = styled.button`
-  background-color: #ff3399;
+  backgroundImage: linear-gradient(
+      rgba(0, 0, 0, 0.9) 1px, transparent 1px
+    ), linear-gradient(90deg, rgba(0, 0, 0, 0.9) 1px, transparent 1px);
   color: white;
   border: none;
   padding: 12px 30px;
@@ -57,7 +60,6 @@ const Button = styled.button`
   cursor: pointer;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
 
   &:hover {
     background-color: #00ccff;
@@ -65,8 +67,31 @@ const Button = styled.button`
   }
 `;
 
+const arcadeStyle = {
+  color: "white",
+  border: "3px solid #0056b3", /* Slightly darker blue for the border */
+  padding: "12px 24px",
+  fontSize: "1.2rem",
+  cursor: "pointer",
+  borderRadius: "6px", /* Slightly rounded corners */
+  boxShadow: "0 0 2px #0056b3, 0 0 4px #007bff", /* Reduced glow effect */
+  transition: "all 0.3s ease",
+
+  /* Subtle blocky text shadow */
+  textShadow: "0.5px 0.5px 0px #ff6600, 1px 1px 0px #ff3399",
+
+  /* Grid background effect */
+  backgroundImage:
+    "linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px), linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px)",
+  backgroundSize: "12px 12px", /* Pixel grid */
+  backgroundColor: "#007bff", /* Button background color */
+};
+
+
 const DashboardPage: NextPage = () => {
   const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => { document.body.style.backgroundColor = 'red' }, [])
 
   // Simulated user data (this could be fetched from an API)
   const userData = {
@@ -99,9 +124,9 @@ const DashboardPage: NextPage = () => {
         <InfoText><strong>Daily Exercise:</strong> {userData.dailyExercise}</InfoText>
       </InfoBox>
 
-      <Button onClick={() => alert("Navigating to another page...")}>
+      <ArcadeButton onClick={() => alert("Navigating to another page...")}>
         Update Information
-      </Button>
+      </ArcadeButton>
     </Container>
   );
 };
