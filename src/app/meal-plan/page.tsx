@@ -7,7 +7,7 @@ import Navigation from '@/app/components/Navigation';
 import ArcadeButton from '@/app/components/ArcadeButton';
 
 // AI Logic (commented out for now to avoid excess api calls)
-/*
+
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Styled Components

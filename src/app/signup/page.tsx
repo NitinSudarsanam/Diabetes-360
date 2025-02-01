@@ -115,7 +115,6 @@ const SignUpPage: NextPage = () => {
       }
     }
   };
-  fetchdata();
 
   // Prevent rendering the page until mounted on client side
   if (!isClient) {
