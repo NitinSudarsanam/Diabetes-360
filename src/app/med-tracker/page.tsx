@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
+import Navigation from '@/app/components/Navigation';
 
 // Styled Components
 const Container = styled.div`
@@ -175,6 +176,7 @@ const MedicationTrackerPage: NextPage = () => {
 
   return (
     <Container>
+      <Navigation />
       <Header>Medication Tracker</Header>
 
       <FormContainer>

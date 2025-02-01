@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
+import Navigation from '@/app/components/Navigation';
 
 // Styled Components
 
@@ -173,6 +174,7 @@ const MealPlanPage: NextPage = () => {
 
   return (
     <Container>
+      <Navigation />
       <Header>7-Day Meal Plan</Header>
 
       <MealPlanContainer>

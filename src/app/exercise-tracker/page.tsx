@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
+import Navigation from '@/app/components/Navigation';
 
 // Styled Components
 
@@ -127,6 +128,7 @@ const ExerciseTrackerPage: NextPage = () => {
 
   return (
     <Container>
+      <Navigation />
       <Header>Exercise Tracker</Header>
 
       <ExerciseContainer>

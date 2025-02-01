@@ -4,6 +4,7 @@ import React from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 import Navigation from '@/app/components/Navigation';
+import { useRouter } from 'next/navigation';
 
 // Styled Components
 const Container = styled.div`
@@ -136,7 +137,8 @@ const JoinButton = styled.button`
   border-radius: 5px;
 `;
 
-const Home: NextPage = () => {
+const UserHome: NextPage = () => {
+    const router = useRouter();
   return (
     <Container>
     <Navigation />
@@ -145,7 +147,7 @@ const Home: NextPage = () => {
         <HeroContent>
           <HeroHeading>Welcome to Diabetes360: Level Up Your Health!</HeroHeading>
           <HeroParagraph>The ultimate game plan for managing your diabetes—track your sugar levels, build better habits, and score your way to healthier living!</HeroParagraph>
-          <StartButton>Start Your Adventure!</StartButton>
+          <StartButton onClick={() => router.push('/dashboard')}>Access Your Profile!</StartButton>
         </HeroContent>
       </HeroSection>
 
@@ -198,4 +200,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default UserHome;

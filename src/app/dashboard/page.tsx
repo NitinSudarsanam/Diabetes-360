@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
+import Navigation from '@/app/components/Navigation';
 
 // Styled Components
 const Container = styled.div`
@@ -87,6 +88,7 @@ const DashboardPage: NextPage = () => {
 
   return (
     <Container>
+      <Navigation />
       <Header>Welcome to Your Dashboard</Header>
 
       <InfoBox>
