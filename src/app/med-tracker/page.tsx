@@ -115,6 +115,7 @@ const EditDeleteButton = styled.button`
 
 const MedicationTrackerPage: NextPage = () => {
   // State for managing the medication list
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [medications, setMedications] = useState<any[]>([]);
 
   // State for input form
