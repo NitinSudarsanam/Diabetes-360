@@ -66,23 +66,6 @@ const ExerciseBox = styled.div`
   margin-bottom: 15px;
 `;
 
-const Button = styled.button`
-  background-color: #ff3399;
-  color: white;
-  border: none;
-  padding: 12px 30px;
-  font-size: 1.5em;
-  cursor: pointer;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: #00ccff;
-    transform: scale(1.05);
-  }
-`;
-
 const ExerciseTrackerPage: NextPage = () => {
   // Initialize an empty array for the exercise log
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
