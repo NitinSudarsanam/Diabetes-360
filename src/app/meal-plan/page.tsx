@@ -308,7 +308,8 @@ const MealPlanPage: NextPage = () => {
 
   // Refresh the meal plan (this can later be connected to an API or user preferences)
   const handleRefreshMealPlan = () => {
-    setMealPlan([...sampleMealPlan]);  // This is for demonstration, replace with dynamic data if needed
+    setIsRequestProcessed(false);
+    //setMealPlan([...sampleMealPlan]);  // This is for demonstration, replace with dynamic data if needed
   };
 
   if (!isMounted) {
