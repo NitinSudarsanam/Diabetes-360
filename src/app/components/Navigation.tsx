@@ -17,7 +17,7 @@ const Navigation: React.FC = () => {
 
 const styles = {
   navbar: {
-    position: "fixed" as "fixed",
+    position: "fixed",
     top: 0,
     left: 0,
     width: "100%",
