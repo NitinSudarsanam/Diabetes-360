@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 import Navigation from '@/app/components/Navigation';
+import ArcadeButton from '@/app/components/ArcadeButton';
 
 // Styled Components
 const Container = styled.div`
@@ -198,7 +199,7 @@ const MedicationTrackerPage: NextPage = () => {
           value={frequency}
           onChange={(e) => setFrequency(e.target.value)}
         />
-        <Button onClick={addMedication}>Add Medication</Button>
+        <ArcadeButton onClick={addMedication}>Add Medication</ArcadeButton>
       </FormContainer>
 
       <MedicationList>

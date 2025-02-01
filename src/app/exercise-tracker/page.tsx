@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 import Navigation from '@/app/components/Navigation';
+import ArcadeButton from '@/app/components/ArcadeButton';
 
 // Styled Components
 
@@ -145,7 +146,7 @@ const ExerciseTrackerPage: NextPage = () => {
           </ExerciseLogContainer>
         ))}
 
-        <Button onClick={handleLogExercise}>Log Exercise</Button>
+        <ArcadeButton onClick={handleLogExercise}>Log Exercise</ArcadeButton>
       </ExerciseContainer>
     </Container>
   );

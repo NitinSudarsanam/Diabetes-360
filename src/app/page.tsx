@@ -12,20 +12,6 @@ const Container = styled.div`
   padding: 20px;
 `;
 
-const styles =
-{
-  pixelBg: {
-    position: "absolute" as "absolute",
-    width: "100%",
-    height: "100%",
-    backgroundImage: `linear-gradient(
-      rgba(0, 0, 0, 0.8) 1px, transparent 1px
-    ), linear-gradient(90deg, rgba(0, 0, 0, 0.8) 1px, transparent 1px)`,
-    backgroundSize: "10px 10px",
-    backgroundColor: "#1a1a1a",
-  }
-}
-
 const HeroSection = styled.section`
   background: linear-gradient(135deg, #ff66cc, #00ccff);
   padding: 50px 20px;

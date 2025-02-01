@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 import Navigation from '@/app/components/Navigation';
+import ArcadeButton from '@/app/components/ArcadeButton';
 
 // AI Logic (commented out for now to avoid excess api calls)
 /*
@@ -212,7 +213,7 @@ const MealPlanPage: NextPage = () => {
             </MealContainer>
           </MealDayContainer>
         ))}
-        <Button onClick={handleRefreshMealPlan}>Refresh Meal Plan</Button>
+        <ArcadeButton onClick={handleRefreshMealPlan}>Refresh Meal Plan</ArcadeButton>
       </MealPlanContainer>
     </Container>
   );
