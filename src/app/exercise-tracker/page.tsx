@@ -85,6 +85,7 @@ const Button = styled.button`
 
 const ExerciseTrackerPage: NextPage = () => {
   // Initialize an empty array for the exercise log
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [exerciseLog, setExerciseLog] = useState<any[]>([]);
   const [isClient, setIsClient] = useState(false);
 
