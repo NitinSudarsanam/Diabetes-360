@@ -1,11 +1,10 @@
 "use client"
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 
 // Styled Components
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -13,9 +12,7 @@ const Container = styled.div`
   background-color: #111;
   color: #fff;
   font-family: 'Arial', sans-serif;
-  height: 100%;
-  overflow-y: auto; /* Allow scrolling */
-  scroll-behavior: smooth; /* Smooth scrolling */
+  padding: 40px;
 `;
 
 const Header = styled.header`
@@ -29,38 +26,24 @@ const Header = styled.header`
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 `;
 
-const Section = styled.section`
-  padding: 40px 20px;
-  width: 100%;
-  max-width: 1200px;
-  margin: 30px 0;
+const InfoBox = styled.div`
   background: #222;
+  padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-  text-align: center;
-`;
-
-const StatsContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  margin: 20px 0;
-`;
-
-const StatCard = styled.div`
-  background: #444;
-  padding: 30px;
-  width: 30%;
-  border-radius: 10px;
+  margin-top: 20px;
+  width: 80%;
+  max-width: 900px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 `;
 
-const StatCardHeading = styled.h3`
+const InfoTitle = styled.h2`
   font-size: 1.8em;
   color: #ff3399;
 `;
 
-const StatCardValue = styled.p`
-  font-size: 2.5em;
+const InfoText = styled.p`
+  font-size: 1.2em;
+  margin: 10px 0;
   color: #fff;
 `;
 
@@ -68,8 +51,8 @@ const Button = styled.button`
   background-color: #ff3399;
   color: white;
   border: none;
-  padding: 10px 20px;
-  font-size: 1.2em;
+  padding: 12px 30px;
+  font-size: 1.5em;
   cursor: pointer;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -81,100 +64,44 @@ const Button = styled.button`
   }
 `;
 
-const MealAndExercise = styled.div`
-  display: flex;
-  justify-content: space-around;
-  margin: 30px 0;
-`;
+const DashboardPage: NextPage = () => {
+  const [isClient, setIsClient] = useState(false);
 
-const MealExerciseCard = styled.div`
-  background: #444;
-  padding: 30px;
-  width: 45%;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-`;
+  // Simulated user data (this could be fetched from an API)
+  const userData = {
+    name: "John Doe",
+    age: 45,
+    bloodSugarLevel: "120 mg/dL",
+    dailyExercise: "30 minutes of walking",
+  };
 
-const MealExerciseHeading = styled.h3`
-  font-size: 1.8em;
-  color: #ff3399;
-`;
+  // Hydration fix: useEffect to delay client-specific logic
+  useEffect(() => {
+    setIsClient(true); // Set client state after component mounts
+  }, []);
 
-const MealExerciseDescription = styled.p`
-  font-size: 1.2em;
-  color: #fff;
-`;
+  // Prevent rendering until mounted on client side
+  if (!isClient) {
+    return <div>Loading...</div>;
+  }
 
-const Footer = styled.footer`
-  background: #333;
-  padding: 10px;
-  width: 100%;
-  text-align: center;
-  font-size: 1.2em;
-  color: #fff;
-  margin-top: auto;
-`;
-
-// Dashboard Page
-
-const Dashboard: NextPage = () => {
   return (
     <Container>
-      {/* Header */}
-      <Header>
-        Welcome, Player!
-        <p>Your Diabetes360 Dashboard</p>
-      </Header>
+      <Header>Welcome to Your Dashboard</Header>
 
-      {/* Stats Section */}
-      <Section>
-        <h2>Your Health Stats</h2>
-        <StatsContainer>
-          <StatCard>
-            <StatCardHeading>Blood Sugar Level</StatCardHeading>
-            <StatCardValue>120 mg/dL</StatCardValue>
-            <Button>Track Progress</Button>
-          </StatCard>
-          <StatCard>
-            <StatCardHeading>Today's Steps</StatCardHeading>
-            <StatCardValue>3,200 steps</StatCardValue>
-            <Button>Log More</Button>
-          </StatCard>
-          <StatCard>
-            <StatCardHeading>Calories Burned</StatCardHeading>
-            <StatCardValue>350 kcal</StatCardValue>
-            <Button>Track Exercise</Button>
-          </StatCard>
-        </StatsContainer>
-      </Section>
+      <InfoBox>
+        <InfoTitle>User Information</InfoTitle>
+        <InfoText><strong>Name:</strong> {userData.name}</InfoText>
+        <InfoText><strong>Age:</strong> {userData.age}</InfoText>
+        <InfoText><strong>Blood Sugar Level:</strong> {userData.bloodSugarLevel}</InfoText>
+        <InfoText><strong>Daily Exercise:</strong> {userData.dailyExercise}</InfoText>
+      </InfoBox>
 
-      {/* Meal and Exercise Section */}
-      <Section>
-        <h2>Meal and Exercise Plans</h2>
-        <MealAndExercise>
-          <MealExerciseCard>
-            <MealExerciseHeading>Meal Plan</MealExerciseHeading>
-            <MealExerciseDescription>
-              Plan your meals and avoid sugar spikes. Choose your daily meals from a range of low-carb options!
-            </MealExerciseDescription>
-            <Button>View Meal Plan</Button>
-          </MealExerciseCard>
-          <MealExerciseCard>
-            <MealExerciseHeading>Exercise Plan</MealExerciseHeading>
-            <MealExerciseDescription>
-              Keep track of your workouts and get custom exercises to stay fit and healthy.
-            </MealExerciseDescription>
-            <Button>View Exercises</Button>
-          </MealExerciseCard>
-        </MealAndExercise>
-      </Section>
-
-      {/* Footer */}
-      <Footer>
-        Diabetes360 | Empowering you to live a healthy life
-      </Footer>
+      <Button onClick={() => alert("Navigating to another page...")}>
+        Update Information
+      </Button>
     </Container>
   );
 };
 
-export default Dashboard;
+export default DashboardPage;

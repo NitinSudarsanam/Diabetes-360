@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 
@@ -28,51 +28,27 @@ const Header = styled.header`
 `;
 
 const FormContainer = styled.div`
-  width: 100%;
-  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: #222;
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   margin-top: 20px;
-`;
-
-const FormTitle = styled.h2`
-  font-size: 2em;
-  color: #ff3399;
-  margin-bottom: 20px;
+  width: 100%;
+  max-width: 500px;
 `;
 
 const InputField = styled.input`
-  width: 100%;
+  width: 80%;
   padding: 12px;
   margin: 10px 0;
-  background: #333;
-  border: 1px solid #444;
+  background-color: #444;
+  border: none;
   border-radius: 5px;
   color: #fff;
   font-size: 1.2em;
-
-  &:focus {
-    border-color: #ff3399;
-    outline: none;
-  }
-`;
-
-const SelectField = styled.select`
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  background: #333;
-  border: 1px solid #444;
-  border-radius: 5px;
-  color: #fff;
-  font-size: 1.2em;
-
-  &:focus {
-    border-color: #ff3399;
-    outline: none;
-  }
 `;
 
 const Button = styled.button`
@@ -92,85 +68,76 @@ const Button = styled.button`
   }
 `;
 
-const ProfilePage: NextPage = () => {
-  // State to hold form input values
-  const [formData, setFormData] = useState({
-    name: '',
-    age: '',
-    bloodSugar: '',
-    weight: '',
-    exercise: ''
-  });
+const SignUpPage: NextPage = () => {
+  // States for form input
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  
+  // Hydration fix: useEffect to delay client-specific logic
+  const [isClient, setIsClient] = useState(false);
 
-  // Handle form input changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
+  useEffect(() => {
+    setIsClient(true); // This will only be set after component mounts
+  }, []);
 
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
+  // SignUp form submission handler
+  const handleSignUp = (e: React.FormEvent) => {
     e.preventDefault();
-    // You could submit the data to a backend or process it here
-    console.log('Form submitted:', formData);
+    if (password === confirmPassword) {
+      // Handle form submission here (e.g., send to API)
+      console.log('Form Submitted:', { name, email, password });
+    } else {
+      alert("Passwords do not match!");
+    }
   };
+
+  // Prevent rendering the page until mounted on client side
+  if (!isClient) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Container>
-      <Header>
-        Patient Profile
-      </Header>
+      <Header>Sign Up</Header>
 
       <FormContainer>
-        <FormTitle>Personal Information</FormTitle>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSignUp}>
           <InputField
             type="text"
-            name="name"
-            placeholder="Enter your full name"
-            value={formData.name}
-            onChange={handleChange}
+            placeholder="Full Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
           />
           <InputField
-            type="number"
-            name="age"
-            placeholder="Enter your age"
-            value={formData.age}
-            onChange={handleChange}
+            type="email"
+            placeholder="Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
           />
           <InputField
-            type="number"
-            name="bloodSugar"
-            placeholder="Enter your latest blood sugar level (mg/dL)"
-            value={formData.bloodSugar}
-            onChange={handleChange}
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
           />
           <InputField
-            type="number"
-            name="weight"
-            placeholder="Enter your weight (kg)"
-            value={formData.weight}
-            onChange={handleChange}
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
           />
-          <SelectField
-            name="exercise"
-            value={formData.exercise}
-            onChange={handleChange}
-          >
-            <option value="">Select your daily exercise</option>
-            <option value="none">None</option>
-            <option value="light">Light (Walking, Stretching)</option>
-            <option value="moderate">Moderate (Jogging, Cycling)</option>
-            <option value="intense">Intense (Running, High-Intensity Training)</option>
-          </SelectField>
-          <Button type="submit">Save Profile</Button>
+
+          <Button type="submit">Sign Up</Button>
         </form>
       </FormContainer>
     </Container>
   );
 };
 
-export default ProfilePage;
+export default SignUpPage;
