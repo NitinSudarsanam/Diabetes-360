@@ -25,6 +25,7 @@ const stats = {
 const NavigationButton = ({ destination, label }: { destination: string; label: string }) => {
   const router = useRouter();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { globalState, setGlobalState } = useGlobalState();
   useEffect(() => {
     if (!globalState.isAuthenticated) {
