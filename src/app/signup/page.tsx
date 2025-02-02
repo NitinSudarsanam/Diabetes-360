@@ -8,19 +8,30 @@ import { useRouter } from "next/navigation";
 
 const SignUpPage: React.FC = () => {
   // States for form input
-  const [username, setName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [type, setType] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter(); // Move useRouter hook here
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle signup logic
-    const formData = { email, password, username, type };
+
+    // Basic form validation
+    if (!email || !password || !name || !type) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
+    const formData = { email, password, name, type };
 
     try {
+      setLoading(true); // Set loading state
+      setError(""); // Reset error
+
       // Send the formData to the backend via POST request
       const response = await axios.post(
         "http://localhost:4000/api/signup",
@@ -32,8 +43,11 @@ const SignUpPage: React.FC = () => {
 
       console.log("Form submitted successfully:", response.data);
       router.push("/dashboard"); // Redirect after successful signup
-    } catch (error) {
-      console.error("Error submitting form:", error);
+    } catch (error: any) {
+      setError(error.response?.data?.error || "Failed to sign up. Please try again.");
+      console.error("Error submitting form:", error.response ? error.response.data : error.message);
+    } finally {
+      setLoading(false); // Reset loading state
     }
   };
 
@@ -63,6 +77,13 @@ const SignUpPage: React.FC = () => {
               CREATE YOUR PLAYER
             </h2>
 
+            {/* Error Message */}
+            {error && (
+              <div className="text-red-500 text-center mb-4">
+                <p>{error}</p>
+              </div>
+            )}
+
             <div className="space-y-2">
               <label className="block">Username</label>
               <div className="flex items-center bg-white rounded p-2">
@@ -70,7 +91,7 @@ const SignUpPage: React.FC = () => {
                 <input
                   type="text"
                   className="flex-1 text-black outline-none bg-transparent"
-                  value={username}
+                  value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
@@ -128,8 +149,9 @@ const SignUpPage: React.FC = () => {
                 boxShadow: "2px 2px 0px #065f46",
                 textShadow: "1px 1px 0px #065f46",
               }}
+              disabled={loading}
             >
-              START JOURNEY!
+              {loading ? "Signing Up..." : "START JOURNEY!"}
             </button>
           </form>
         </div>

@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const cors = require("cors");
 require("dotenv").config();
 
@@ -11,7 +10,6 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 4000;
 const MONGODB_URI = process.env.MONGODB_URI;
-const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key"; // Store in .env
 
 // Connect to MongoDB
 mongoose.connect(MONGODB_URI, {
@@ -28,42 +26,44 @@ mongoose.connect(MONGODB_URI, {
 const userSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
-  type: String,
-  name: String
+  name: { type: String, required: true },
+  type: { type: String, required: true }
 });
 
 const User = mongoose.model("User", userSchema);
 
 // 📝 **Signup Route (Hash password before saving)**
 app.post("/api/signup", async (req, res) => {
+  const { email, password, name, type } = req.body;
+
+  // Validate required fields
+  if (!email || !password || !name || !type) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
   try {
-    const { email, password, name, type } = req.body;
-
-    if (!email || !password || !name) {
-      return res.status(400).json({ error: "All fields are required" });
-    }
-
-    // Check if user exists
+    // Check if the user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: "Email already exists" });
     }
 
-    // Hash password
+    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user
-    const newUser = await User.create({
+    // Create new user
+    const newUser = new User({
       email,
-      password: hashedPassword, // Corrected
+      password: hashedPassword,
       name,
-      type
+      type,
     });
 
-    res.status(201).json({ message: "✅ User registered successfully" });
+    await newUser.save();
+    res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
-    console.error("❌ Signup error:", error);
-    res.status(500).json({ error: "Signup failed" });
+    console.error("Signup error:", error);
+    res.status(500).json({ error: "Signup failed, please try again later" });
   }
 });
 
