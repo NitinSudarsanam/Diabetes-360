@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { NextPage } from "next";
 import Navigation from "@/app/components/Navigation";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import { Mail, Lock } from "lucide-react"; // Importing missing icons
 
 const LoginPage: NextPage = () => {
@@ -17,14 +17,14 @@ const LoginPage: NextPage = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(""); // Clear previous errors
-  
+
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/login",
+        "https://fgyis6cpq9.us-east-1.awsapprunner.com/login",
         { email, password },
         { headers: { "Content-Type": "application/json" } }
       );
-  
+
       const data = response.data as { token: string };
       if (data.token) {
         localStorage.setItem("authToken", data.token); // Store token in local storage
@@ -33,11 +33,10 @@ const LoginPage: NextPage = () => {
         setError("Login failed: No token received");
       }
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        setError(`Login failed: ${error.response?.data?.error || "Unknown error"}`);
-      } else {
-        setError("Login failed: Unknown error");
-      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const err = error as any;
+      setError(`Login failed: ${err.response?.data?.error || "Unknown error"}`);
+      setError("Login failed: Unknown error");
     }
   };
 

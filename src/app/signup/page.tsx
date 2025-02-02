@@ -26,7 +26,20 @@ const SignUpPage: React.FC = () => {
       return;
     }
 
-    const formData = { email, password, name, type };
+    const formData = {
+      email,
+      password,
+      name,
+      type,
+      age: 0,
+      height: 0,
+      weight: 0,
+      bloodSugar: 0,
+      diabetesDuration: 0,
+      meds: ["", "", 0],
+      cardioLog: ["", 0],
+      weightsLog: ["", 0],
+    };
 
     try {
       setLoading(true); // Set loading state
@@ -34,13 +47,16 @@ const SignUpPage: React.FC = () => {
 
       // Send the formData to the backend via POST request
       const response = await axios.post(
-        "http://localhost:4000/api/signup",
+        "https://fgyis6cpq9.us-east-1.awsapprunner.com/api/users",
         formData,
         {
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          },
         }
       );
-
+      
       console.log("Form submitted successfully:", response.data);
       router.push("/dashboard"); // Redirect after successful signup
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
