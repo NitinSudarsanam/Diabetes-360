@@ -45,7 +45,7 @@ const Home = () => {
           { icon: Cookie, title: "WORLD 1-2", subtitle: <a href= "/dashboard"><u>SUGAR LEVELS</u></a>, desc: "Collect coins to track your blood sugar levels!" },
           { icon: Apple, title: "WORLD 1-3", subtitle: <a href= "/meal-plan"><u>POWER-UPS</u></a>, desc: "Find the right food power-ups for your journey!" },
           { icon: Activity, title: "WORLD 2-1", subtitle: <a href= "/exercise-tracker"><u>EXERCISE MOVES</u></a>, desc: "Learn the best moves to stay active!" },
-          { icon: Syringe, title: "WORLD 2-1", subtitle: <a href= "/med-tracker"><u>SPECIAL ITEMS</u></a>, desc: "Master your medication power-ups!" },
+          { icon: Syringe, title: "WORLD 2-2", subtitle: <a href= "/med-tracker"><u>SPECIAL ITEMS</u></a>, desc: "Master your medication power-ups!" },
           { icon: Heart, title: "WORLD 2-3", subtitle: <a href= "/daily-quests"><u>DAILY QUESTS</u></a>, desc: "Complete your daily diabetes management quests!" }
         ].map((item, index) => (
           <div key={index} 

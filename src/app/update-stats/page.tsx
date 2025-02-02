@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { NextPage } from 'next';
 import { CalendarCheck, User, Ruler, Heart, BarChart2 } from 'lucide-react';
 import Navigation from '@/app/components/Navigation';
+import { useRouter } from 'next/navigation';
 
 const UpdateStatsPage: NextPage = () => {
   const [stats, setStats] = useState({
@@ -15,6 +16,8 @@ const UpdateStatsPage: NextPage = () => {
     diabetesDuration: ''
   });
 
+  const router = useRouter(); // Initialize useRouter for navigation
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setStats(prev => ({ ...prev, [name]: value }));
@@ -23,6 +26,10 @@ const UpdateStatsPage: NextPage = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert('Stats updated successfully!');
+  };
+
+  const handleNavigateBack = () => {
+    router.push('/dashboard'); // Navigate to the dashboard page
   };
 
   return (
@@ -86,6 +93,20 @@ const UpdateStatsPage: NextPage = () => {
             </button>
           </div>
         </form>
+
+        {/* Navigate back button */}
+        <div className="flex justify-center mt-6">
+          <button
+            onClick={handleNavigateBack}
+            className="px-6 py-3 text-xl font-bold text-white border-4 border-white rounded-lg shadow-lg transition-transform transform hover:-translate-y-1"
+            style={{
+              background: "linear-gradient(#60a5fa, #3b82f6)",
+              boxShadow: "4px 4px 0px #1e40af",
+              textShadow: "2px 2px 0px #1e40af"
+            }}>
+            Go Back to Dashboard
+          </button>
+        </div>
       </div>
     </div>
   );
