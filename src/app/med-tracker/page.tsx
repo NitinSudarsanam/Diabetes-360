@@ -89,7 +89,7 @@ const AddMedication = () => {
       medicationData: globalState.meds
     };
     console.log(globalState);
-    await axios.post("http://localhost:8080/api/update-med-data", dataToSend, {
+    await axios.post("https://fgyis6cpq9.us-east-1.awsapprunner.com/api/update-med-data", dataToSend, {
       headers: { "Content-Type": "application/json" },
     });
   }

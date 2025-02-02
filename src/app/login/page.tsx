@@ -33,7 +33,7 @@ const LoginPage: NextPage = () => {
       if (data.token) {
         localStorage.setItem("authToken", data.token); // Store token in local storage
         const userInfoServer = await axios.get(
-          "http://localhost:8080/api/users",
+          "https://fgyis6cpq9.us-east-1.awsapprunner.com/api/users",
           {headers: {address: email}}
         );
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
