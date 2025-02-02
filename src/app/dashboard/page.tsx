@@ -86,11 +86,11 @@ const DashboardPage: NextPage = () => {
     }, []);
 
     const data = {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+      labels: ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'],
       datasets: [
         {
           label: 'Blood Sugar (mg/dL)',
-          data: [80, 150, 100, 200, 130],
+          data: [115, 160, 130, 120, 160, 170, 185],
           borderColor: '#f59e0b', // Golden Yellow
           backgroundColor: '#7dd3fc', // Neon green dots
           borderWidth: 10, // Thicker line
@@ -125,7 +125,7 @@ const DashboardPage: NextPage = () => {
           },
           title: {
             display: true,
-            text: 'Months',
+            text: 'Day',
             font: { family: 'Courier New', size: 16, weight: 'bold' as const },
             color: 'white',
           },
@@ -159,7 +159,7 @@ const DashboardPage: NextPage = () => {
 
     return (
       <div style={{ padding: 20 }}>
-        <h2 style={{ color: 'white', fontFamily: 'Press Start 2P', fontWeight: 'bold', fontSize: '24px' }}> Blood Sugar By Month</h2>
+        <h2 style={{ color: 'white', fontFamily: 'Press Start 2P', fontWeight: 'bold', fontSize: '24px' }}> Blood Sugar This Week</h2>
         <Line data={data} options={options} />
       </div>
     );
@@ -188,11 +188,11 @@ const DashboardPage: NextPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {[ 
             { icon: User, label: "Name", value: stats.name },
-            { icon: CalendarCheck, label: "Age", value: stats.age },
-            { icon: Ruler, label: "Height", value: stats.height },
-            { icon: BarChart2, label: "Weight", value: stats.weight },
-            { icon: Heart, label: "Blood Sugar", value: stats.bloodSugar },
-            { icon: CalendarCheck, label: "Diabetes Duration", value: stats.diabetesDuration }
+            { icon: CalendarCheck, label: "Age", value: `${stats.age}` },
+            { icon: Ruler, label: "Height", value: `${stats.height}"` },
+            { icon: BarChart2, label: "Weight", value: `${stats.weight} lbs` },
+            { icon: Heart, label: "Blood Sugar", value: `${stats.bloodSugar} mg/dL` },
+            { icon: CalendarCheck, label: "Diabetes Duration", value: `${stats.diabetesDuration} Years` }
             ].map((stat, index) => (
             <div
               key={index}

@@ -13,7 +13,7 @@ import {
 import Navigation from '@/app/components/Navigation';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend } from 'chart.js';
-import {useGlobalState} from '../context/GlobalStateContext'; // Adjust the path based on your project structure
+import { useGlobalState } from '../context/GlobalStateContext'; // Adjust the path based on your project structure
 import { useRouter } from 'next/navigation';
 
 // Register necessary components
@@ -41,17 +41,17 @@ const ExerciseTracker = () => {
     weight: globalState.weight,
 
   };
-  
-/*
-  const stats = {
-    height: "450 kcal",
-    weight: "45 minutes",
-    bloodSugar: "5 days",
-    weeklyGoal: "5 workouts",
-    yesterdayWorkout: "60 min workout",
-    nextWorkout: "Tomorrow"
-  };
-*/
+
+  /*
+    const stats = {
+      height: "450 kcal",
+      weight: "45 minutes",
+      bloodSugar: "5 days",
+      weeklyGoal: "5 workouts",
+      yesterdayWorkout: "60 min workout",
+      nextWorkout: "Tomorrow"
+    };
+  */
   const PixelArtGraph: React.FC = () => {
     useEffect(() => {
       // Load pixel font dynamically
@@ -68,11 +68,11 @@ const ExerciseTracker = () => {
     }, []);
 
     const data = {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+      labels: ['Sep', 'Oct', 'Nov', 'Dec', 'Jan'],
       datasets: [
         {
-          label: 'Blood Sugar (mg/dL)',
-          data: [80, 150, 100, 200, 130],
+          label: 'Cardio',
+          data: [34, 21, 54, 61, 39],
           borderColor: '#f59e0b', // Golden Yellow
           backgroundColor: '#7dd3fc', // Neon green dots
           borderWidth: 10, // Thicker line
@@ -82,6 +82,18 @@ const ExerciseTracker = () => {
           pointBorderColor: '#bae6fd', // Darker Cyan
           pointBorderWidth: 4,
         },
+        {
+          label: 'Lifting',
+          data: [15, 36, 43, 32, 56],
+          borderColor: '#10b981', // Brighter green
+          backgroundColor: '#f472b6',
+          borderWidth: 10, // Thicker line
+          pointRadius: 12, // Big square dots
+          pointStyle: 'rect', // Square points (for pixel look)
+          pointBackgroundColor: '#f472b6', // Light Red dots
+          pointBorderColor: '#ef4444', // Lighter Red
+          pointBorderWidth: 4,
+        },
       ],
     };
 
@@ -89,10 +101,19 @@ const ExerciseTracker = () => {
       responsive: true,
       plugins: {
         legend: {
-          display: false, // Hide legend
-        },
-        tooltip: {
-          enabled: false, // Disable tooltips
+          display: true, // Enable legend
+            labels: {
+            font: { family: 'Courier New', size: 14, weight: 'bold' as const },
+            color: 'white', // White text
+            usePointStyle: true, // Use point style for legend
+            pointStyle: 'rect', // Square points
+            boxWidth: 24, // Box size
+            boxHeight: 24, // Box size
+            padding: 20, // Increase spacing between legend items
+            }
+          },
+          tooltip: {
+            enabled: false, // Disable tooltips
         },
       },
       scales: {
@@ -107,7 +128,7 @@ const ExerciseTracker = () => {
           },
           title: {
             display: true,
-            text: 'Months',
+            text: 'Month',
             font: { family: 'Courier New', size: 16, weight: 'bold' as const },
             color: 'white',
           },
@@ -123,7 +144,7 @@ const ExerciseTracker = () => {
           },
           title: {
             display: true,
-            text: 'Blood Sugar (mg/dL)',
+            text: 'Hours of Exercise',
             font: { family: 'Courier New', size: 16, weight: 'bold' as const },
             color: 'white',
           },
@@ -141,7 +162,7 @@ const ExerciseTracker = () => {
 
     return (
       <div style={{ padding: 20 }}>
-        <h2 style={{ color: 'white', fontFamily: 'Press Start 2P', fontWeight: 'bold', fontSize: '24px' }}> Blood Sugar By Month</h2>
+        <h2 style={{ color: 'white', fontFamily: 'Press Start 2P', fontWeight: 'bold', fontSize: '24px' }}> Hours of Exercise By Month</h2>
         <Line data={data} options={options} />
       </div>
     );
@@ -206,8 +227,8 @@ const ExerciseTracker = () => {
           ))}
         </div>
 
-{/* New Workout Input Section */}
-<div className="rounded-lg p-6 mb-8" style={{
+        {/* New Workout Input Section */}
+        <div className="rounded-lg p-6 mb-8" style={{
           background: 'linear-gradient(#34d399, #059669)',
           border: '4px solid #fff',
           boxShadow: '4px 4px 0px #065f46',
