@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const cors = require("cors");
+const jwt = require("jsonwebtoken"); // Import jwt
 require("dotenv").config();
 
 const app = express();
@@ -10,6 +11,7 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 4000;
 const MONGODB_URI = process.env.MONGODB_URI;
+const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret"; // Ensure to set JWT_SECRET in .env file
 
 // Connect to MongoDB
 mongoose.connect(MONGODB_URI, {
@@ -67,7 +69,6 @@ app.post("/api/signup", async (req, res) => {
   }
 });
 
-// 🔐 **Login Route (Generate JWT Token)**
 app.post("/api/login", async (req, res) => {
   try {
     console.log("🔍 Login Request Body:", req.body);
@@ -77,6 +78,7 @@ app.post("/api/login", async (req, res) => {
       return res.status(400).json({ error: "Email and password are required" });
     }
 
+    // Find the user by email
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -96,10 +98,10 @@ app.post("/api/login", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    console.log("✅ Token generated:", token);
+    console.log("✅ Token generated:", token); // Log the token for debugging purposes
     res.json({ token, message: "Login successful" });
   } catch (error) {
-    console.error("❌ Login error:", error);
+    console.error("❌ Login error:", error); // Detailed error logging
     res.status(500).json({ error: "Login failed" });
   }
 });

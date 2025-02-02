@@ -16,25 +16,28 @@ const LoginPage: NextPage = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-
+    setError(""); // Clear previous errors
+  
     try {
       const response = await axios.post(
         "http://localhost:4000/api/login",
         { email, password },
         { headers: { "Content-Type": "application/json" } }
       );
-
+  
       const data = response.data as { token: string };
       if (data.token) {
-        localStorage.setItem("authToken", data.token); // Store token
+        localStorage.setItem("authToken", data.token); // Store token in local storage
         router.push("/dashboard"); // Redirect after successful login
       } else {
         setError("Login failed: No token received");
       }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      setError("Login failed");
+      if (axios.isAxiosError(error)) {
+        setError(`Login failed: ${error.response?.data?.error || "Unknown error"}`);
+      } else {
+        setError("Login failed: Unknown error");
+      }
     }
   };
   
@@ -110,4 +113,4 @@ const LoginPage: NextPage = () => {
   );
 };
 
-export default LoginPage;
+export default LoginPage; // Make sure it's the default export
