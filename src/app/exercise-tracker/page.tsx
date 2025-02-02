@@ -33,14 +33,24 @@ const ExerciseTracker = () => {
   }
 
   const stats = {
-    caloriesBurned: "450 kcal",
-    workoutTime: "45 minutes",
-    currentStreak: "5 days",
-    weeklyGoal: "4/5 workouts",
-    personalBest: "60 min workout",
-    nextWorkout: "Tomorrow 9AM"
-  };
+    cardioLog: globalState.cardioLog,
+    weightLog: globalState.weightLog,
+    bloodSugar: globalState.bloodSugar,
+    height: globalState.height,
+    weight: globalState.weight,
 
+  };
+  
+/*
+  const stats = {
+    height: "450 kcal",
+    weight: "45 minutes",
+    bloodSugar: "5 days",
+    weeklyGoal: "5 workouts",
+    yesterdayWorkout: "60 min workout",
+    nextWorkout: "Tomorrow"
+  };
+*/
   const PixelArtGraph: React.FC = () => {
     useEffect(() => {
       // Load pixel font dynamically
@@ -166,12 +176,12 @@ const ExerciseTracker = () => {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {[
-            { icon: Flame, label: "Calories Burned", value: stats.caloriesBurned },
-            { icon: Timer, label: "Workout Time", value: stats.workoutTime },
-            { icon: Activity, label: "Current Streak", value: stats.currentStreak },
-            { icon: CalendarCheck, label: "Weekly Progress", value: stats.weeklyGoal },
-            { icon: Trophy, label: "Personal Best", value: stats.personalBest },
-            { icon: Calendar, label: "Next Workout", value: stats.nextWorkout }
+            { icon: Flame, label: "Height", value: stats.height },
+            { icon: Timer, label: "Weight (lbs)", value: stats.weight },
+            { icon: Activity, label: "Last Workout", value: "N/A" },
+            { icon: CalendarCheck, label: "Weekly Goal", value: "5 Workouts" },
+            { icon: Trophy, label: "Next Workout", value: "Tomorrow" },
+            { icon: Calendar, label: "Blood Sugar", value: stats.bloodSugar }
           ].map((stat, index) => (
             <div
               key={index}

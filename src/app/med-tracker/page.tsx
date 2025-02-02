@@ -1,10 +1,9 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 "use client"
 
 import React, { useState, useEffect } from 'react';
 import Navigation from '@/app/components/Navigation';
 import { Syringe, PlusCircle, Trash2 } from 'lucide-react';
-import {useGlobalState} from '../context/GlobalStateContext'; // Adjust the path based on your project structure
+import { useGlobalState } from '../context/GlobalStateContext'; // Adjust the path based on your project structure
 import { useRouter } from 'next/navigation';
 
 const AddMedication = () => {
@@ -12,20 +11,32 @@ const AddMedication = () => {
   const { globalState, setGlobalState } = useGlobalState();
   const router = useRouter();
 
-    useEffect(() => {
-      if (!globalState.isAuthenticated) {
-        router.push('/login');
-      }
-    }, [globalState.isAuthenticated, router]);
-  
+  useEffect(() => {
     if (!globalState.isAuthenticated) {
-      return <div>Loading...</div>;
+      router.push('/login');
     }
-  
-  const [medications, setMedications] = useState([
-    { id: 1, name: "Insulin Shot", details: "Fast-acting insulin before meals.", dosage: "10 units", taken: false },
-    { id: 2, name: "Metformin", details: "Helps control blood sugar levels.", dosage: "500 mg", taken: false },
-  ]);
+  }, [globalState.isAuthenticated, router]);
+
+  if (!globalState.isAuthenticated) {
+    return <div>Loading...</div>;
+  }
+
+  // Array of medications with [name, details, dosage] format
+  const medicationData: [string, string, number][] = [
+    ["Insulin Shot", "Fast-acting insulin before meals.", 10],
+    ["Metformin", "Helps control blood sugar levels.", 500],
+  ];
+
+  // Initialize medications state by transforming the array
+  const [medications, setMedications] = useState(
+    medicationData.map((med, index) => ({
+      id: index + 1, // Unique ID based on the index
+      name: med[0],
+      details: med[1],
+      dosage: `${med[2]} mg`, // Convert dosage to string with "mg"
+      taken: false
+    }))
+  );
 
   const [newMedName, setNewMedName] = useState("");
   const [newMedDetails, setNewMedDetails] = useState("");
@@ -37,7 +48,7 @@ const AddMedication = () => {
       id: Date.now(),
       name: newMedName,
       details: newMedDetails,
-      dosage: newDosage,
+      dosage: `${newDosage} mg`, // Convert dosage to string with "mg"
       taken: false
     }]);
     setNewMedName("");
@@ -64,8 +75,8 @@ const AddMedication = () => {
       <Navigation />
 
       {/* Header */}
-      <div className="text-4xl font-bold text-center mb-8" 
-          style={{ textShadow: '3px 3px 0px #0369a1', padding: '20px 20px 20px' }}>
+      <div className="text-4xl font-bold text-center mb-8"
+        style={{ textShadow: '3px 3px 0px #0369a1', padding: '20px 20px 20px' }}>
       </div>
       <header className="text-center mb-12">
         <h1 className="text-5xl font-bold mb-4 p-6 rounded-lg inline-block"
@@ -82,7 +93,7 @@ const AddMedication = () => {
         </p>
       </header>
 
-      {/* Add New Medication (Wider & Centered) */}
+      {/* Add New Medication */}
       <div className="mb-12 bg-yellow-500 p-6 rounded-lg text-center shadow-lg border-4 border-white w-full max-w-2xl"
         style={{ boxShadow: '4px 4px 0px #92400e' }}>
         <h2 className="text-2xl font-bold mb-4">Add a New Medication</h2>
@@ -102,9 +113,9 @@ const AddMedication = () => {
             onChange={(e) => setNewMedDetails(e.target.value)}
           />
           <input
-            type="text"
+            type="number"
             className="p-2 border-2 border-white rounded-lg text-black w-full"
-            placeholder="Dosage (e.g., 500mg)"
+            placeholder="Dosage (e.g., 500)"
             value={newDosage}
             onChange={(e) => setNewDosage(e.target.value)}
           />
@@ -114,7 +125,7 @@ const AddMedication = () => {
         </button>
       </div>
 
-      {/* Medication List (Stacked & Centered) */}
+      {/* Medication List */}
       <div className="w-full max-w-lg space-y-4">
         {medications.map(med => (
           <div key={med.id}
