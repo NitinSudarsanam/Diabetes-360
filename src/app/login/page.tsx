@@ -31,18 +31,35 @@ const LoginPage: NextPage = () => {
       const data = response.data as { token: string };
       if (data.token) {
         localStorage.setItem("authToken", data.token); // Store token in local storage
-        console.log(response.data);
-        const userData = response.data as { user: { name: string } };
-        globalState.name = userData.user.name;
-        globalState.email = email;
-        globalState.age = 0;
-        globalState.height = 0;
-        globalState.weight = 0;
-        globalState.bloodSugar = 0;
-        globalState.diabetesDuration = 0;
-        globalState.meds = ["", "", 0];
-        globalState.cardioLog = ["", 0];
-        globalState.weightsLog = ["", 0];
+        const userInfoServer = await axios.get<{
+          height: number;
+          weight: number;
+          bloodSugar: number;
+          diabetesDuration: number;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          meds: any;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          cardioLog: any;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          weightsLog: any;
+          email: string;
+          name: string; age: number 
+}>(
+          "http://localhost:8080/api/users",
+          {headers: {address: email}}
+        );
+        console.log(userInfoServer.data);
+        const userData = userInfoServer.data;
+        globalState.name = userData.name;
+        globalState.email = userData.email;
+        globalState.age = userData.age;
+        globalState.height = userData.height;
+        globalState.weight = userData.weight;
+        globalState.bloodSugar = userData.bloodSugar;
+        globalState.diabetesDuration = userData.diabetesDuration;
+        globalState.meds = userData.meds;
+        globalState.cardioLog = userData.cardioLog;
+        globalState.weightsLog = userData.weightsLog;
         setGlobalState({ isAuthenticated: true });
         router.push("/dashboard"); // Redirect after successful login
       } else {
