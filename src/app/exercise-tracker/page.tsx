@@ -8,9 +8,7 @@ import {
   Flame,
   Trophy,
   Calendar,
-  CalendarCheck,
-  ArrowUp,
-  ArrowDown
+  CalendarCheck
 } from 'lucide-react';
 import Navigation from '@/app/components/Navigation';
 import { Line } from 'react-chartjs-2';
@@ -28,13 +26,6 @@ const ExerciseTracker = () => {
     personalBest: "60 min workout",
     nextWorkout: "Tomorrow 9AM"
   };
-
-  const exercises = [
-    { name: "Push-ups", sets: "3", reps: "12", diff: "+2" },
-    { name: "Squats", sets: "4", reps: "15", diff: "+5" },
-    { name: "Plank", sets: "3", reps: "45s", diff: "+10s" },
-    { name: "Lunges", sets: "3", reps: "10", diff: "-2" }
-  ];
 
   const PixelArtGraph: React.FC = () => {
     useEffect(() => {
@@ -197,7 +188,7 @@ const ExerciseTracker = () => {
           opacity: 0.9
         }}>
           <h2 className="text-2xl font-bold mb-4" style={{ textShadow: '2px 2px 0px #1e40af' }}>
-            Log Today's Workout To Level Up!
+            Log Today&apos;s Workout To Level Up!
           </h2>
           <form onSubmit={handleWorkoutSubmit} className="space-y-4">
             <div className="flex items-center space-x-4">
