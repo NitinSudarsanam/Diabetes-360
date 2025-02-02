@@ -136,7 +136,7 @@ const LoginPage: NextPage = () => {
                 textShadow: "1px 1px 0px #065f46",
               }}
             >
-              START ADVENTURE!
+              START JOURNEY!
             </button>
           </form>
 

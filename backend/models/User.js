@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   age: { type: Integer, required: true },
   height: { type: Integer, required: true },
   weight: { type: Integer, required: true },
-  bloodSugar: { type: Double, required: true },
+  bloodSugar: { type: [String, Double], required: true },
   diabetesDuration: { type: Double, required: true },
   meds: { type: [String, String, Double], required: true },
   cardioLog: { type: [String, Double], required: true },
