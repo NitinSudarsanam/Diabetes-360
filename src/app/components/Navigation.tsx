@@ -1,21 +1,46 @@
+"use client";
+
+import React from "react";
 import Link from "next/link";
-import {useGlobalState} from '../context/GlobalStateContext'; // Adjust the path based on your project structure
-import {useEffect} from 'react'
+import { useGlobalState } from '../context/GlobalStateContext'; // Adjust the path based on your project structure
 
 const Navigation: React.FC = () => {
+  const { globalState, setGlobalState } = useGlobalState();
+
+  const handleLogout = () => {
+    setGlobalState({ isAuthenticated: false });
+    localStorage.removeItem("authToken"); // Clear token from localStorage
+  };
+
   return (
     <nav style={styles.navbar}>
-      <div style={styles.logo}><Link href="/">Diabetes 360</Link></div>
+      <div style={styles.logo}>
+        <Link href="/">Diabetes 360</Link>
+      </div>
       <ul style={styles.navLinks}>
-        <li><Link href="/login" style={styles.link}>🔒 Login</Link></li>
-        <li><Link href="/" style={styles.link}>🏠 Home</Link></li>
-        <li><Link href="/dashboard" style={styles.link}>📊 Dashboard</Link></li>
-        <li><Link href="/exercise-tracker" style={styles.link}>🏋️ Exercise</Link></li>
-        <li><Link href="/meal-plan" style={styles.link}>🍽️ Meal Plan</Link></li>
-        <li><Link href="/med-tracker" style={styles.link}>💊 Medication</Link></li>
+        {globalState.isAuthenticated ? (
+          <li style={styles.navItem}>
+            <button
+              onClick={handleLogout}
+              style={styles.link}
+            >
+              🚪 Logout
+            </button>
+          </li>
+        ) : (
+          <li style={styles.navItem}>
+            <Link href="/login" style={styles.link}>
+              🔒 Login
+            </Link>
+          </li>
+        )}
+        <li style={styles.navItem}><Link href="/" style={styles.link}>🏠 Home</Link></li>
+        <li style={styles.navItem}><Link href="/dashboard" style={styles.link}>📊 Dashboard</Link></li>
+        <li style={styles.navItem}><Link href="/exercise-tracker" style={styles.link}>🏋️ Exercise</Link></li>
+        <li style={styles.navItem}><Link href="/meal-plan" style={styles.link}>🍽️ Meal Plan</Link></li>
+        <li style={styles.navItem}><Link href="/med-tracker" style={styles.link}>💊 Medication</Link></li>
       </ul>
     </nav>
-
   );
 };
 
@@ -48,6 +73,13 @@ const styles = {
     listStyle: "none",
     display: "flex",
     gap: "20px",
+    alignItems: "center", // Ensure vertical alignment of items
+    height: "100%", // Ensure the navbar takes full height
+  },
+  navItem: {
+    display: "flex",
+    alignItems: "center", // Vertically center the content within the li
+    height: "100%", // Make each nav item take full height
   },
   link: {
     textDecoration: "none",
@@ -58,6 +90,7 @@ const styles = {
     padding: "8px 12px",
     borderRadius: "4px",
     transition: "0.3s",
+    cursor: "pointer",
   },
 };
 
