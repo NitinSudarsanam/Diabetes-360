@@ -168,6 +168,16 @@ const SignUpPage: React.FC = () => {
               {loading ? "Signing Up..." : "START JOURNEY!"}
             </button>
           </form>
+          {/* Sign-Up Link */}
+                    <div className="mt-4 flex justify-center items-center">
+                      <a
+                        href="/login"
+                        className="flex items-center space-x-2 text-white hover:text-amber-600 transition duration-200"
+                      >
+                        <User className="w-5 h-5" />
+                        <span>Already Registered? Click to Log In</span>
+                      </a>
+                    </div>
         </div>
       </div>
     </div>

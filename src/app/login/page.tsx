@@ -5,8 +5,8 @@ import axios from "axios";
 import { NextPage } from "next";
 import Navigation from "@/app/components/Navigation";
 import { useRouter } from "next/navigation";
-import { Mail, Lock } from "lucide-react"; // Importing missing icons
-import {useGlobalState} from '../context/GlobalStateContext'; // Adjust the path based on your project structure
+import { Mail, Lock, User } from "lucide-react"; // Importing missing icons
+import { useGlobalState } from "../context/GlobalStateContext"; // Adjust the path based on your project structure
 
 const LoginPage: NextPage = () => {
   const [email, setEmail] = useState("");
@@ -122,6 +122,17 @@ const LoginPage: NextPage = () => {
               START ADVENTURE!
             </button>
           </form>
+
+          {/* Sign-Up Link */}
+          <div className="mt-4 flex justify-center items-center">
+            <a
+              href="/signup"
+              className="flex items-center space-x-2 text-white hover:text-amber-600 transition duration-200"
+            >
+              <User className="w-5 h-5" />
+              <span>Not Registered? Click to Sign-Up</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
