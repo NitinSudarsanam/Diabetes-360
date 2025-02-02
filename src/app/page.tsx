@@ -5,6 +5,7 @@ import { NextPage } from 'next';
 import styled from 'styled-components';
 import Navigation from '@/app/components/Navigation';
 
+
 // Styled Components
 const Container = styled.div`
   width: 100%;

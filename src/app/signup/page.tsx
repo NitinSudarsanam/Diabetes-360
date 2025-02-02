@@ -1,9 +1,11 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 import Navigation from '@/app/components/Navigation';
+import { useRouter } from 'next/navigation'; 
 
 // Styled Components
 
@@ -68,54 +70,49 @@ const Button = styled.button`
     transform: scale(1.05);
   }
 `;
-
 const SignUpPage: NextPage = () => {
   // States for form input
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  
+  const [age, setAge] = useState('');
+  const [bloodSugar, setBloodSugar] = useState('');
+  const [height, setHeight] = useState('');
+  const [weight, setWeight] = useState('');
+
   // Hydration fix: useEffect to delay client-specific logic
   const [isClient, setIsClient] = useState(false);
+
+  const router = useRouter(); // Move useRouter hook here
 
   useEffect(() => {
     setIsClient(true); // This will only be set after component mounts
   }, []);
 
   // SignUp form submission handler
-  const handleSignUp = (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      // Handle form submission here (e.g., send to API)
-      console.log('Form Submitted:', { name, email, password });
-    } else {
+  
+    if (password !== confirmPassword) {
       alert("Passwords do not match!");
+      return;
     }
-
-    const fetchData = async () => {
-      const formData = { name, email, password }
-      try {
-        const response = await fetch('http://localhost:4000/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
-        });
-
-        if (response.ok) {
-          alert('Form submitted successfully');
-        } else {
-          alert('Error submitting form');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Error submitting form');
-      }
+  
+    const formData = { email, password, name, age, bloodSugar, height, weight };
+  
+    try {
+      // Send the formData to the backend via POST request
+      const response = await axios.post('http://localhost:4000/api/signup', formData, {
+        headers: { "Content-Type": "application/json" }
+      });
+  
+      console.log('Form submitted successfully:', response.data);
+      router.push('/dashboard');  // Redirect after successful signup
+    } catch (error) {
+      console.error('Error submitting form:', error);
     }
   };
-  fetchdata();
 
   // Prevent rendering the page until mounted on client side
   if (!isClient) {
@@ -155,6 +152,35 @@ const SignUpPage: NextPage = () => {
             placeholder="Confirm Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+
+          <InputField
+            type="age"
+            placeholder="What is your Age?"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+            required
+          />
+          <InputField
+            type="bloodSugar"
+            placeholder="What is your Blood Sugar?"
+            value={bloodSugar}
+            onChange={(e) => setBloodSugar(e.target.value)}
+            required
+          />
+          <InputField
+            type="height"
+            placeholder="What is your Height?"
+            value={height}
+            onChange={(e) => setHeight(e.target.value)}
+            required
+          />
+          <InputField
+            type="weight"
+            placeholder="What is your Weight?"
+            value={weight}
+            onChange={(e) => setWeight(e.target.value)}
             required
           />
 
