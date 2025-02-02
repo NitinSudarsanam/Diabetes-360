@@ -33,7 +33,7 @@ const LoginPage: NextPage = () => {
       if (data.token) {
         localStorage.setItem("authToken", data.token); // Store token in local storage
         const userInfoServer = await axios.get(
-          "https://fgyis6cpq9.us-east-1.awsapprunner.com/api/users",
+          "http://localhost:8080/api/users",
           {headers: {address: email}}
         );
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -53,7 +53,7 @@ const LoginPage: NextPage = () => {
           weightsLog: any[];
         };
         console.log("User Data:");
-        console.log(userData);
+        console.log(userInfoServer.data);
         globalState.name = userData.name;
         globalState.email = userData.email;
         globalState.age = userData.age;
