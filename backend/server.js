@@ -18,19 +18,18 @@ mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.error("MongoDB Connection Error:", err));
+  .then(() => console.log("✅ MongoDB Connected"))
+  .catch((err) => {
+    console.error("❌ MongoDB Connection Error:", err);
+    process.exit(1); // Exit if DB connection fails
+  });
 
 // Define User Schema & Model
 const userSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   type: String,
-  name: String,
-  age: Number,
-  bloodSugar: Number,
-  height: Number,
-  weight: Number,
+  name: String
 });
 
 const User = mongoose.model("User", userSchema);
@@ -38,7 +37,11 @@ const User = mongoose.model("User", userSchema);
 // 📝 **Signup Route (Hash password before saving)**
 app.post("/api/signup", async (req, res) => {
   try {
-    const { email, type, password, name, age, bloodSugar, height, weight } = req.body;
+    const { email, password, name, type } = req.body;
+
+    if (!email || !password || !name) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
 
     // Check if user exists
     const existingUser = await User.findOne({ email });
@@ -52,26 +55,28 @@ app.post("/api/signup", async (req, res) => {
     // Create user
     const newUser = await User.create({
       email,
-      password: hashedPassword,
+      password: hashedPassword, // Corrected
       name,
-      age,
-      bloodSugar,
-      height,
-      weight,
+      type
     });
 
-    res.status(201).json({ message: "User registered successfully" });
+    res.status(201).json({ message: "✅ User registered successfully" });
   } catch (error) {
-    console.error("Signup error:", error);
+    console.error("❌ Signup error:", error);
     res.status(500).json({ error: "Signup failed" });
   }
 });
 
 // 🔐 **Login Route (Generate JWT Token)**
 app.post("/api/login", async (req, res) => {
-  console.log('Login Request:', req.body);  // Add this line to inspect the body
   try {
+    console.log("🔍 Login Request Body:", req.body);
     const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ error: "Email and password are required" });
+    }
+
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -85,18 +90,21 @@ app.post("/api/login", async (req, res) => {
     }
 
     // Generate JWT token
-    const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      JWT_SECRET,
+      { expiresIn: "1h" }
+    );
 
+    console.log("✅ Token generated:", token);
     res.json({ token, message: "Login successful" });
   } catch (error) {
-    console.error("Login error:", error);
+    console.error("❌ Login error:", error);
     res.status(500).json({ error: "Login failed" });
   }
 });
 
-// Start Server
+// 🚀 **Start Server**
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🌍 Server running on port ${PORT}`);
 });
