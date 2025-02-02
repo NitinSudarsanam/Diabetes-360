@@ -5,7 +5,7 @@ import { Utensils, RefreshCw } from 'lucide-react';
 import Navigation from '@/app/components/Navigation';
 
 const MealPlanPage = () => {
-  const [mealPlan, setMealPlan] = useState([
+  const [mealPlan] = useState([
     {
       day: "Monday",
       meals: {

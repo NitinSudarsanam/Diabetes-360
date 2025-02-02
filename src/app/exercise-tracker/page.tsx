@@ -82,7 +82,7 @@ const ExerciseTracker = () => {
           opacity: 0.9
         }}>
           <h2 className="text-2xl font-bold mb-4" style={{ textShadow: '2px 2px 0px #1e40af' }}>
-            Today's Workout Progress
+            Today&apos;s Workout Progress
           </h2>
           <div className="space-y-4">
             {exercises.map((exercise, index) => (

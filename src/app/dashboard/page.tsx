@@ -1,71 +1,25 @@
 "use client"
 
-import React from 'react';
 import { Activity, TrendingUp, Cookie, Heart, CalendarCheck, Timer } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend, ChartOptions } from 'chart.js';
-import styled from 'styled-components';
+//import { Line } from 'react-chartjs-2';
+//import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend, ChartOptions } from 'chart.js';
+//import styled from 'styled-components';
 import Navigation from '@/app/components/Navigation';
 
-const DashboardPage = () => {
-  const stats = {
-    avgBloodSugar: "120 mg/dL",
-    lastMedication: "2 hours ago",
-    exerciseStreak: "5 days",
-    nextMeal: "Lunch in 1 hour",
-    dailySteps: "8,450",
-    weeklyExercise: "4.5 hours"
-  };
-import ArcadeButton from '@/app/components/ArcadeButton';
+const stats = {
+  avgBloodSugar: "120 mg/dL",
+  lastMedication: "2 hours ago",
+  exerciseStreak: "5 days",
+  nextMeal: "Lunch in 1 hour",
+  dailySteps: "8,450",
+  weeklyExercise: "4.5 hours"
+};
 
 // Register required components
-ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
-
-// Styled Components
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: transparent;
-  color: #fff;
-  font-family: 'Arial', sans-serif;
-  padding: 40px;
-`;
-
-const Header = styled.header`
-  background: linear-gradient(135deg, #ff66cc, #00ccff);
-  width: 100%;
-  padding: 20px;
-  text-align: center;
-  font-size: 2em;
-  font-weight: bold;
-  border-bottom: 5px solid #fff;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-`;
-
-const InfoBox = styled.div`
-  background: #222;
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 20px;
-  width: 80%;
-  max-width: 900px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-`;
-
-const InfoTitle = styled.h2`
-  font-size: 1.8em;
-  color: #ff3399;
-`;
-
-const InfoText = styled.p`
-  font-size: 1.2em;
-  margin: 10px 0;
-  color: #fff;
-`;
-
+//ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
+/*
 const BloodSugarChart: React.FC = () => {
   useEffect(() => {
     // Dynamically add the Google Font to the head
@@ -178,18 +132,10 @@ const BloodSugarChart: React.FC = () => {
       <Line data={data} options={options} />
     </div>
   );
-};
+};*/
 
 const DashboardPage: NextPage = () => {
   const [isClient, setIsClient] = useState(false);
-
-  // Simulated user data (this could be fetched from an API)
-  const userData = {
-    name: "John Doe",
-    age: 45,
-    bloodSugarLevel: "120 mg/dL",
-    dailyExercise: "30 minutes of walking",
-  };
 
   // Hydration fix: useEffect to delay client-specific logic
   useEffect(() => {
