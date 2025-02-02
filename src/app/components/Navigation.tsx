@@ -11,7 +11,6 @@ const Navigation: React.FC = () => {
     // go to login page
     window.location.href = "/login";
     setGlobalState({ isAuthenticated: false });
-    localStorage.removeItem("authToken"); // Clear token from localStorage
   };
 
   return (
