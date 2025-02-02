@@ -11,7 +11,7 @@ import {useGlobalState} from '../context/GlobalStateContext'; // Adjust the path
 
 // Register necessary components
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
-
+/*
 const stats = {
   name: "John Doe",
   age: "30 Years",
@@ -19,7 +19,7 @@ const stats = {
   weight: "160 lbs",
   bloodSugar: "120 mg/dL",
   diabetesDuration: "5 Years"
-};
+};*/
 
 
 const NavigationButton = ({ destination, label }: { destination: string; label: string }) => {
@@ -54,6 +54,16 @@ const NavigationButton = ({ destination, label }: { destination: string; label: 
 
 const DashboardPage: NextPage = () => {
   const [isClient, setIsClient] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { globalState, setGlobalState } = useGlobalState();
+  const stats = {
+    name: globalState.name,
+    age: globalState.age,
+    height: globalState.height,
+    weight: globalState.weight,
+    bloodSugar: globalState.bloodSugar,
+    diabetesDuration: globalState.diabetesDuration
+  };
 
   // Hydration fix: useEffect to delay client-specific logic
   useEffect(() => {

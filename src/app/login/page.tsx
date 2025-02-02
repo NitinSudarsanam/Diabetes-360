@@ -6,17 +6,20 @@ import { NextPage } from "next";
 import Navigation from "@/app/components/Navigation";
 import { useRouter } from "next/navigation";
 import { Mail, Lock } from "lucide-react"; // Importing missing icons
+import {useGlobalState} from '../context/GlobalStateContext'; // Adjust the path based on your project structure
 
 const LoginPage: NextPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { globalState, setGlobalState } = useGlobalState();
 
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(""); // Clear previous errors
+    setGlobalState({ isAuthenticated: false });
 
     try {
       const response = await axios.post(
@@ -28,6 +31,19 @@ const LoginPage: NextPage = () => {
       const data = response.data as { token: string };
       if (data.token) {
         localStorage.setItem("authToken", data.token); // Store token in local storage
+        console.log(response.data);
+        const userData = response.data as { user: { name: string } };
+        globalState.name = userData.user.name;
+        globalState.email = email;
+        globalState.age = 0;
+        globalState.height = 0;
+        globalState.weight = 0;
+        globalState.bloodSugar = 0;
+        globalState.diabetesDuration = 0;
+        globalState.meds = ["", "", 0];
+        globalState.cardioLog = ["", 0];
+        globalState.weightsLog = ["", 0];
+        setGlobalState({ isAuthenticated: true });
         router.push("/dashboard"); // Redirect after successful login
       } else {
         setError("Login failed: No token received");
