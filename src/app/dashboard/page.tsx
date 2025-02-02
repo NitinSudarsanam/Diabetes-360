@@ -3,10 +3,8 @@
 import { Activity, TrendingUp, Cookie, Heart, CalendarCheck, Timer } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
-//import { Line } from 'react-chartjs-2';
-//import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend, ChartOptions } from 'chart.js';
-//import styled from 'styled-components';
 import Navigation from '@/app/components/Navigation';
+import { useRouter } from 'next/navigation';
 
 const stats = {
   avgBloodSugar: "120 mg/dL",
@@ -17,148 +15,51 @@ const stats = {
   weeklyExercise: "4.5 hours"
 };
 
-// Register required components
-//ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
-/*
-const BloodSugarChart: React.FC = () => {
-  useEffect(() => {
-    // Dynamically add the Google Font to the head
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap';
-    document.head.appendChild(link);
-
-    // Clean up the link when the component is unmounted
-    return () => {
-      document.head.removeChild(link);
-    };
-  }, []); // Empty dependency array means this runs only once when the component mounts
-
-  const data = {
-    labels: ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00'],
-    datasets: [
-      {
-        label: 'Blood Sugar (mg/dL)',
-        data: [90, 105, 120, 130, 125, 140, 110],
-        fill: false,
-        borderColor: 'rgba(255,0,255,1)', 
-        tension: 0,
-        pointRadius: 5,
-        pointBackgroundColor: 'rgba(255,0,255,1)',
-        borderWidth: 4,
-      },
-    ],
-  };
-
-  const options: ChartOptions<'line'> = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top' as const,
-        labels: {
-          font: {
-            family: 'Press Start 2P', // Use the pixelated font
-            size: 14,
-            weight: 'bold',
-          },
-          color: 'white',
-        },
-      },
-      tooltip: {
-        mode: 'index',
-        intersect: false,
-        backgroundColor: 'rgba(0,0,0,0.7)',
-        titleColor: 'cyan',
-        bodyColor: 'lime',
-        borderColor: 'white',
-        borderWidth: 2,
-        padding: 8,
-        callbacks: {
-          label: function (context) {
-            return `${context.dataset.label}: ${context.raw} mg/dL`;
-          },
-        },
-      },
-    },
-    scales: {
-      x: {
-        beginAtZero: true,
-        grid: {
-          color: 'rgba(255,255,255,0.2)',
-          lineWidth: 2,
-        },
-        ticks: {
-          font: {
-            family: 'Press Start 2P', 
-            size: 16,
-            weight: 'bold',
-          },
-          color: 'white',
-        },
-      },
-      y: {
-        beginAtZero: true,
-        grid: {
-          color: 'rgba(255,255,255,0.2)',
-          lineWidth: 2,
-        },
-        ticks: {
-          font: {
-            family: 'Press Start 2P', 
-            size: 16,
-            weight: 'bold',
-          },
-          color: 'white',
-        },
-      },
-    },
-    elements: {
-      line: {
-        tension: 0,
-      },
-    },
-    animation: {
-      duration: 1000,
-    },
-    layout: {
-      padding: 20,
-    },
-    backgroundColor: 'black',
-  };
+const NavigationButton = ({ destination, label }: { destination: string; label: string }) => {
+  const router = useRouter();
 
   return (
-    <div>
-      <h2 style={{ color: 'white', fontFamily: 'Press Start 2P', fontSize: '24px' }}>Blood Sugar Over Time</h2>
-      <Line data={data} options={options} />
-    </div>
+    <button 
+      onClick={() => router.push(destination)}
+      className="px-6 py-3 text-xl font-bold text-white border-4 border-white rounded-lg shadow-lg transition-transform transform hover:-translate-y-1"
+      style={{
+        background: "linear-gradient(#fcd34d, #f59e0b)",
+        boxShadow: "4px 4px 0px #92400e",
+        textShadow: "2px 2px 0px #92400e"
+      }}
+    >
+      {label}
+    </button>
   );
-};*/
+};
 
 const DashboardPage: NextPage = () => {
   const [isClient, setIsClient] = useState(false);
 
   // Hydration fix: useEffect to delay client-specific logic
   useEffect(() => {
-    setIsClient(true); // Set client state after component mounts
+    setIsClient(true);
   }, []);
 
-  // Prevent rendering until mounted on client side
   if (!isClient) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="min-h-screen bg-sky-400 p-8 text-white font-mono" style={{
-      backgroundImage: 'linear-gradient(transparent 95%, #7dd3fc 95%), linear-gradient(90deg, transparent 95%, #7dd3fc 95%)',
-      backgroundSize: '40px 40px'
-    }}>
+    <div className="min-h-screen flex flex-col bg-sky-400 p-8 text-white font-mono"
+      style={{
+        backgroundImage: 'linear-gradient(transparent 95%, #7dd3fc 95%), linear-gradient(90deg, transparent 95%, #7dd3fc 95%)',
+        backgroundSize: '40px 40px'
+      }}
+    >
       <Navigation />
+
       <h1 className="text-4xl font-bold text-center mb-8" 
           style={{ textShadow: '3px 3px 0px #0369a1', padding: '80px 20px 20px' }}>
         PLAYER STATS
       </h1>
 
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto flex-grow">
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {[
@@ -189,6 +90,11 @@ const DashboardPage: NextPage = () => {
             </div>
           ))}
         </div>
+
+        {/* Navigation Button - Always at the Bottom */}
+      <div className="w-full flex justify-center py-6">
+        <NavigationButton destination="/update-stats" label="Update Stats" />
+      </div>
 
         {/* Recent Activity */}
         <div className="rounded-lg p-6" style={{
@@ -229,4 +135,5 @@ const DashboardPage: NextPage = () => {
     </div>
   );
 };
+
 export default DashboardPage;
