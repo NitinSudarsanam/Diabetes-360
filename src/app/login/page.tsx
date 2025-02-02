@@ -12,6 +12,7 @@ const LoginPage: NextPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { globalState, setGlobalState } = useGlobalState();
 
   const router = useRouter();
@@ -19,7 +20,7 @@ const LoginPage: NextPage = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(""); // Clear previous errors
-    setGlobalState({ isAuthenticated: false });
+    globalState.isAuthenticated = false;
 
     try {
       const response = await axios.post(
@@ -61,7 +62,7 @@ const LoginPage: NextPage = () => {
         globalState.meds = userData.meds;
         globalState.cardioLog = userData.cardioLog;
         globalState.weightsLog = userData.weightsLog;
-        setGlobalState({ isAuthenticated: true });
+        globalState.isAuthenticated = true;
         console.log(globalState);
         router.push("/dashboard"); // Redirect after successful login
       } else {

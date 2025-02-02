@@ -20,6 +20,7 @@ import { useRouter } from 'next/navigation';
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
 const ExerciseTracker = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { globalState, setGlobalState } = useGlobalState();
   const router = useRouter();
   useEffect(() => {
@@ -136,6 +137,7 @@ const ExerciseTracker = () => {
     );
   };
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [workoutStats, setWorkoutStats] = React.useState({
     cardioMinutes: '',
     weightTrainingMinutes: '',

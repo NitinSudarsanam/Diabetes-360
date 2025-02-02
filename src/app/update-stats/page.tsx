@@ -23,14 +23,18 @@ const UpdateStatsPage: NextPage = () => {
       if (!globalState.isAuthenticated) {
         return <div>Loading...</div>;
       }
-
+    
+  // fetch stats from mongoDB
+  
+  console.log(globalState);
   const [stats, setStats] = useState({
-    name: globalState.name,
-    age: globalState.age,
-    height: globalState.height,
-    weight: globalState.weight,
-    bloodSugar: globalState.bloodSugar,
-    diabetesDuration: globalState.diabetesDuration,
+    email: globalState.email,
+    name: globalState.name || "",
+    age: globalState.age || "",
+    height: globalState.height || "",
+    weight: globalState.weight || "",
+    bloodSugar: globalState.bloodSugar || "",
+    diabetesDuration: globalState.diabetesDuration || "",
   });
   
   const [loading, setLoading] = useState(false);
@@ -49,7 +53,7 @@ const UpdateStatsPage: NextPage = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:4000/api/update-stats", stats, {
+      const response = await axios.post("http://localhost:8080/api/update-stats", stats, {
         headers: { "Content-Type": "application/json" },
       });
 

@@ -30,11 +30,7 @@ export const GlobalStateProvider = ({ children }) => {
       80 // Weight lifted in kg
     ]
   };  
-  const [globalState, setGlobalState] = useState({
-    
-    user: sampleUser, // Example of a global state variable (user)
-    isAuthenticated: false, // Example of another global state variable (theme)
-  });
+  const [globalState, setGlobalState] = useState(sampleUser);
 
   return (
     <GlobalStateContext.Provider value={{ globalState, setGlobalState }}>

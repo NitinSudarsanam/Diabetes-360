@@ -26,7 +26,7 @@ const NavigationButton = ({ destination, label }: { destination: string; label: 
   const router = useRouter();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { globalState, setGlobalState } = useGlobalState();
+  const { globalState } = useGlobalState();
   useEffect(() => {
     if (!globalState.isAuthenticated) {
       router.push('/login');
@@ -64,6 +64,7 @@ const DashboardPage: NextPage = () => {
     bloodSugar: globalState.bloodSugar,
     diabetesDuration: globalState.diabetesDuration
   };
+  console.log(globalState);
 
   // Hydration fix: useEffect to delay client-specific logic
   useEffect(() => {
@@ -186,33 +187,33 @@ const DashboardPage: NextPage = () => {
       <div className="max-w-6xl mx-auto flex-grow">
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {[ 
+            {[ 
             { icon: User, label: "Name", value: stats.name },
             { icon: CalendarCheck, label: "Age", value: stats.age },
             { icon: Ruler, label: "Height", value: stats.height },
             { icon: BarChart2, label: "Weight", value: stats.weight },
             { icon: Heart, label: "Blood Sugar", value: stats.bloodSugar },
             { icon: CalendarCheck, label: "Diabetes Duration", value: stats.diabetesDuration }
-          ].map((stat, index) => (
+            ].map((stat, index) => (
             <div
               key={index}
               className="p-6 rounded transform hover:-translate-y-1 transition-transform"
               style={{
-                background: 'linear-gradient(#fcd34d, #f59e0b)',
-                border: '4px solid #fff',
-                boxShadow: '4px 4px 0px #92400e',
-                opacity: 0.9
+              background: 'linear-gradient(#fcd34d, #f59e0b)',
+              border: '4px solid #fff',
+              boxShadow: '4px 4px 0px #92400e',
+              opacity: 0.9
               }}
             >
               <div className="flex items-center mb-2">
-                <stat.icon className="w-8 h-8 mr-3" />
-                <h2 className="text-xl font-bold">{stat.label}</h2>
+              <stat.icon className="w-8 h-8 mr-3" />
+              <h2 className="text-xl font-bold">{stat.label}</h2>
               </div>
               <p className="text-3xl font-bold" style={{ textShadow: '2px 2px 0px #92400e' }}>
-                {stat.value}
+              {stat.value === 0 ? '-' : stat.value}
               </p>
             </div>
-          ))}
+            ))}
         </div>
 
         {/* Navigation Button - Always at the Bottom */}
