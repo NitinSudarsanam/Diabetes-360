@@ -12,14 +12,8 @@ const SignUpPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [type, setType] = useState("");
-  // Hydration fix: useEffect to delay client-specific logic
-  const [isClient, setIsClient] = useState(false);
 
   const router = useRouter(); // Move useRouter hook here
-
-  useEffect(() => {
-    setIsClient(true); // This will only be set after component mounts
-  }, []);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
