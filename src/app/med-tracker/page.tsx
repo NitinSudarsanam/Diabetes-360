@@ -6,6 +6,15 @@ import Navigation from '@/app/components/Navigation';
 import { Syringe, PlusCircle, Trash2 } from 'lucide-react';
 import { useGlobalState } from '../context/GlobalStateContext'; // Adjust the path based on your project structure
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
+
+type Medication = {
+  id: number;
+  name: string;
+  details: string;
+  dosage: string;
+  taken: boolean;
+};
 
 const AddMedication = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -23,14 +32,17 @@ const AddMedication = () => {
   }
 
   // Array of medications with [name, details, dosage] format
-  const medicationData: [string, string, number][] = [
+  /*
+  const fakeMedicationData: [string, string, number][] = [
     ["Insulin Shot", "Fast-acting insulin before meals.", 10],
     ["Metformin", "Helps control blood sugar levels.", 500],
-  ];
+  ];*/
+  const medicationData: [string, string, number][] = globalState.meds || [];
 
   // Initialize medications state by transforming the array
   const [medications, setMedications] = useState(
-    medicationData.map((med, index) => ({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    medicationData.map((med: any[], index: number) => ({
       id: index + 1, // Unique ID based on the index
       name: med[0],
       details: med[1],
@@ -45,27 +57,42 @@ const AddMedication = () => {
 
   const addMedication = () => {
     if (newMedName.trim() === "" || newMedDetails.trim() === "" || newDosage.trim() === "") return;
-    setMedications([...medications, {
+    const updatedMedications = [...medications, {
       id: Date.now(),
       name: newMedName,
       details: newMedDetails,
       dosage: `${newDosage} mg`, // Convert dosage to string with "mg"
       taken: false
-    }]);
+    }];
+    setMedications(updatedMedications);
     setNewMedName("");
     setNewMedDetails("");
     setNewDosage("");
+    updateVars(updatedMedications);
   };
 
   const toggleMedication = (id: number) => {
-    setMedications(medications.map(med =>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setMedications(medications.map((med: Medication) =>
       med.id === id ? { ...med, taken: !med.taken } : med
     ));
   };
 
   const removeMedication = (id: number) => {
-    setMedications(medications.filter(med => med.id !== id));
+    setMedications(medications.filter((med: { id: number; }) => med.id !== id));
+    updateVars();
   };
+  async function updateVars(updatedMedications: Medication[] = medications) {
+    globalState.meds = updatedMedications.map((med: Medication) => [med.name, med.details, parseInt(med.dosage)]);
+    const dataToSend = {
+      email: globalState.email,
+      medicationData: globalState.meds
+    };
+    console.log(globalState);
+    await axios.post("http://localhost:8080/api/update-med-data", dataToSend, {
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 
   return (
     <div className="min-h-screen bg-sky-400 p-8 text-white font-mono relative flex flex-col items-center"
@@ -128,7 +155,7 @@ const AddMedication = () => {
 
       {/* Medication List */}
       <div className="w-full max-w-lg space-y-4">
-        {medications.map(med => (
+        {medications.map((med: Medication) => (
           <div key={med.id}
             className={`p-4 rounded-lg cursor-pointer transition-all duration-200 flex justify-between items-center
             ${med.taken ? "bg-green-500" : "bg-yellow-500"} border-4 border-white shadow-lg`}
@@ -137,12 +164,12 @@ const AddMedication = () => {
             <div className="flex items-center space-x-4 w-full">
               <Syringe className="w-8 h-8" />
               <div className="flex-1">
-                <h2 className="text-xl font-bold">{med.name}</h2>
-                <p className="text-sm">{med.details}</p>
-                <p className="text-sm font-semibold">Dosage: {med.dosage}</p>
+          <h2 className="text-xl font-bold">{med.name}</h2>
+          <p className="text-sm">{med.details}</p>
+          <p className="text-sm font-semibold">Dosage: {med.dosage}</p>
               </div>
               <button onClick={(e) => { e.stopPropagation(); removeMedication(med.id); }} className="text-white">
-                <Trash2 className="w-6 h-6" />
+          <Trash2 className="w-6 h-6" />
               </button>
             </div>
           </div>

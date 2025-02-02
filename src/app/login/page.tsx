@@ -45,13 +45,15 @@ const LoginPage: NextPage = () => {
           weight: number;
           bloodSugar: number;
           diabetesDuration: number;
-          meds: string[];
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          meds: any[];
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           cardioLog: any[];
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           weightsLog: any[];
         };
-        console.log(userData.name);
+        console.log("User Data:");
+        console.log(userData);
         globalState.name = userData.name;
         globalState.email = userData.email;
         globalState.age = userData.age;
