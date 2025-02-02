@@ -13,8 +13,8 @@ const DiabetesPage = () => {
       <Navigation />
       
       {/* Header */}
-      <h1 className="text-4xl font-bold text-center mb-8" 
-          style={{ textShadow: '3px 3px 0px #0369a1', padding: '20px 20px 20px' }}></h1>
+      <div className="text-4xl font-bold text-center mb-8" 
+           style={{ textShadow: '3px 3px 0px #0369a1', padding: '20px 20px 20px' }}></div>
       <header className="text-center mb-12">
         <h1 className="text-6xl font-bold mb-4 p-6 rounded-lg inline-block"
             style={{
@@ -159,7 +159,7 @@ const DiabetesPage = () => {
           <p className="mb-2 text-xl" style={{ textShadow: '2px 2px 0px #065f46' }}>
             ⭐ FOR MORE INFO ⭐
           </p>
-          <a className="text-sm" href= "https://www.mayoclinic.org/diseases-conditions/diabetes/symptoms-causes/syc-20371444"><u>Visit the Mayo Clinic's Website!</u></a>
+          <a className="text-sm" href= "https://www.mayoclinic.org/diseases-conditions/diabetes/symptoms-causes/syc-20371444"><u>Visit the Mayo Clinic&apos;s Website!</u></a>
         </div>
       </footer>
     </div>
