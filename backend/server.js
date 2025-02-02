@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const PORT = 4000;
+const PORT = 8080;
 const MONGODB_URI = "mongodb+srv://pierrejoseph:O1cUCLVKwjRk3UWB@diabetes-360.5s5zl.mongodb.net/?retryWrites=true&w=majority&appName=diabetes-360"
 const JWT_SECRET = "your_jwt_secret"; 
 
