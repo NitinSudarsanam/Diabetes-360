@@ -16,7 +16,7 @@ const LoginPage: NextPage = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(""); // Clear previous errors
+    setError(""); // Clear previous erro rs
   
     try {
       const response = await axios.post(
@@ -40,7 +40,7 @@ const LoginPage: NextPage = () => {
       }
     }
   };
-  
+
   return (
     <div className="min-h-screen bg-sky-400 p-8 text-white font-mono">
       <Navigation />
