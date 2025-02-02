@@ -25,12 +25,14 @@ const LoginPage: NextPage = () => {
         { headers: { "Content-Type": "application/json" } }
       );
 
-      if (response.data.token) {
-        localStorage.setItem("authToken", response.data.token); // Store token
+      const data = response.data as { token: string };
+      if (data.token) {
+        localStorage.setItem("authToken", data.token); // Store token
         router.push("/dashboard"); // Redirect after successful login
       } else {
         setError("Login failed: No token received");
       }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setError("Login failed");
     }
