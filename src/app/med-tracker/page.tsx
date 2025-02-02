@@ -3,13 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import Navigation from '@/app/components/Navigation';
 import { Syringe, PlusCircle, Trash2 } from 'lucide-react';
-import {useGlobalState} from '../../../backend/context/GlobalStateContext'; // Adjust the path based on your project structure
+import {useGlobalState} from '../context/GlobalStateContext'; // Adjust the path based on your project structure
 import { useRouter } from 'next/navigation';
 
 const AddMedication = () => {
   const { globalState, setGlobalState } = useGlobalState();
   const router = useRouter();
-  
+
     useEffect(() => {
       if (!globalState.isAuthenticated) {
         router.push('/login');

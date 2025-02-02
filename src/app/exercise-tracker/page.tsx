@@ -13,7 +13,7 @@ import {
 import Navigation from '@/app/components/Navigation';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend } from 'chart.js';
-import {useGlobalState} from '../../../backend/context/GlobalStateContext'; // Adjust the path based on your project structure
+import {useGlobalState} from '../context/GlobalStateContext'; // Adjust the path based on your project structure
 import { useRouter } from 'next/navigation';
 
 // Register necessary components
