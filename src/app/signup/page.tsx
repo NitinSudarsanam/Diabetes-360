@@ -1,41 +1,74 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react';
-import { User, Mail, Lock, Heart } from 'lucide-react';
-import Navigation from '@/app/components/Navigation';
-import { useRouter } from 'next/navigation'; 
+import React, { useState, useEffect } from "react";
+import { User, Mail, Lock, Heart } from "lucide-react";
+import Navigation from "@/app/components/Navigation";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
-const SignupPage = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    diabetesType: ''
-  });
+const SignUpPage: React.FC = () => {
+  // States for form input
+  const [username, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [type, setType] = useState("");
+  // Hydration fix: useEffect to delay client-specific logic
+  const [isClient, setIsClient] = useState(false);
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const router = useRouter(); // Move useRouter hook here
+
+  useEffect(() => {
+    setIsClient(true); // This will only be set after component mounts
+  }, []);
+
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     // Handle signup logic
+    const formData = { email, password, username, type };
+
+    try {
+      // Send the formData to the backend via POST request
+      const response = await axios.post(
+        "http://localhost:4000/api/signup",
+        formData,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      console.log("Form submitted successfully:", response.data);
+      router.push("/dashboard"); // Redirect after successful signup
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   return (
     <div className="min-h-screen bg-sky-400 p-8 text-white font-mono">
       <Navigation />
+      <h1
+        className="text-4xl font-bold text-center mb-8"
+        style={{ textShadow: "3px 3px 0px #0369a1", padding: "80px 20px 20px" }}
+      ></h1>
       <div className="max-w-md mx-auto">
-        <div style={{
-          background: 'linear-gradient(#fcd34d, #f59e0b)',
-          border: '4px solid #fff',
-          boxShadow: '4px 4px 0px #92400e',
-          borderRadius: '8px',
-          opacity: 0.9,
-           padding: '20px 20px 20px'
-        }}>
-          <form onSubmit={handleSubmit} className="p-6 space-y-4">
-            <h2 className="text-2xl font-bold text-center mb-6" 
-                style={{ textShadow: '2px 2px 0px #92400e' }}>
+        <div
+          style={{
+            background: "linear-gradient(#fcd34d, #f59e0b)",
+            border: "4px solid #fff",
+            boxShadow: "4px 4px 0px #92400e",
+            borderRadius: "8px",
+            opacity: 0.9,
+            padding: "20px 20px 20px",
+          }}
+        >
+          <form onSubmit={handleSignUp} className="p-6 space-y-4">
+            <h2
+              className="text-2xl font-bold text-center mb-6"
+              style={{ textShadow: "2px 2px 0px #92400e" }}
+            >
               CREATE YOUR PLAYER
             </h2>
-            
+
             <div className="space-y-2">
               <label className="block">Username</label>
               <div className="flex items-center bg-white rounded p-2">
@@ -43,8 +76,8 @@ const SignupPage = () => {
                 <input
                   type="text"
                   className="flex-1 text-black outline-none bg-transparent"
-                  value={formData.username}
-                  onChange={(e) => setFormData({...formData, username: e.target.value})}
+                  value={username}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
             </div>
@@ -56,8 +89,8 @@ const SignupPage = () => {
                 <input
                   type="email"
                   className="flex-1 text-black outline-none bg-transparent"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
@@ -69,8 +102,8 @@ const SignupPage = () => {
                 <input
                   type="password"
                   className="flex-1 text-black outline-none bg-transparent"
-                  value={formData.password}
-                  onChange={(e) => setFormData({...formData, password: e.target.value})}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>
@@ -81,8 +114,8 @@ const SignupPage = () => {
                 <Heart className="text-amber-600 w-5 h-5 mr-2" />
                 <select
                   className="flex-1 text-black outline-none bg-transparent"
-                  value={formData.diabetesType}
-                  onChange={(e) => setFormData({...formData, diabetesType: e.target.value})}
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
                 >
                   <option value="">Select Type</option>
                   <option value="type1">Type 1</option>
@@ -96,10 +129,10 @@ const SignupPage = () => {
               type="submit"
               className="w-full p-3 mt-6 rounded font-bold transform hover:-translate-y-1 transition-transform duration-200"
               style={{
-                background: 'linear-gradient(#34d399, #059669)',
-                border: '2px solid #fff',
-                boxShadow: '2px 2px 0px #065f46',
-                textShadow: '1px 1px 0px #065f46'
+                background: "linear-gradient(#34d399, #059669)",
+                border: "2px solid #fff",
+                boxShadow: "2px 2px 0px #065f46",
+                textShadow: "1px 1px 0px #065f46",
               }}
             >
               START JOURNEY!
@@ -111,4 +144,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default SignUpPage;
