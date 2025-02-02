@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Utensils, RefreshCw } from 'lucide-react';
 import Navigation from '@/app/components/Navigation';
 import styled, { keyframes } from 'styled-components';
@@ -132,8 +132,25 @@ const MealPlanPage = () => {
   };
 
   const handleRefreshMealPlan = () => {
+    setUserRequest('');
     setIsRequestProcessed(false);
   };
+  
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Enter') {
+        if (!isRequestProcessed && !isLoading) {
+          handleRequestSubmit();
+        }
+      }
+    };
+  
+    window.addEventListener('keydown', handleKeyDown);
+  
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   if (!isRequestProcessed) {
     return (
@@ -185,6 +202,7 @@ const MealPlanPage = () => {
       </div>
     );
   }
+  
 
   return (
     <div className="min-h-screen bg-sky-400 p-8 text-white font-mono" style={{
