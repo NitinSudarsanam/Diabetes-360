@@ -13,9 +13,9 @@ const DailyQuests = () => {
       <Navigation />
       
       {/* Floating Coins (decorative) */}
-      <h1 className="text-4xl font-bold text-center mb-8"
-          style={{ textShadow: '3px 3px 0px #0369a1', padding: '20px 20px 20px' }}>
-      </h1>
+      <div className="text-4xl font-bold text-center mb-8"
+           style={{ textShadow: '3px 3px 0px #0369a1', padding: '20px 20px 20px' }}>
+      </div>
       <div className="absolute top-20 right-20 animate-bounce text-amber-200 text-4xl opacity-80">●</div>
       <div className="absolute top-40 left-32 animate-bounce text-amber-200 text-4xl opacity-80" style={{ animationDelay: '0.5s' }}>●</div>
       <div className="absolute bottom-20 right-40 animate-bounce text-amber-200 text-4xl opacity-80" style={{ animationDelay: '0.3s' }}>●</div>
