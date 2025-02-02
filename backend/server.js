@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const cors = require("cors");
+const jwt = require("jsonwebtoken"); // Import jwt
 require("dotenv").config();
 
 const app = express();
@@ -10,6 +11,7 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 4000;
 const MONGODB_URI = process.env.MONGODB_URI;
+const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret"; // Ensure to set JWT_SECRET in .env file
 
 // Connect to MongoDB
 mongoose.connect(MONGODB_URI, {
