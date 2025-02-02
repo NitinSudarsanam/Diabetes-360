@@ -43,6 +43,7 @@ const SignUpPage: React.FC = () => {
 
       console.log("Form submitted successfully:", response.data);
       router.push("/dashboard"); // Redirect after successful signup
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setError(error.response?.data?.error || "Failed to sign up. Please try again.");
       console.error("Error submitting form:", error.response ? error.response.data : error.message);
