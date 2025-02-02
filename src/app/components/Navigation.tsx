@@ -3,7 +3,7 @@ import Link from "next/link";
 const Navigation: React.FC = () => {
   return (
     <nav style={styles.navbar}>
-      <div style={styles.logo}><a href="/">Diabetes 360</a></div>
+      <div style={styles.logo}><Link href="/">Diabetes 360</Link></div>
       <ul style={styles.navLinks}>
         <li><Link href="/" style={styles.link}>🏠 Home</Link></li>
         <li><Link href="/dashboard" style={styles.link}>📊 Dashboard</Link></li>
@@ -17,7 +17,7 @@ const Navigation: React.FC = () => {
 
 const styles = {
   navbar: {
-    position: "fixed" as "fixed",
+    position: "fixed" as const,
     top: 0,
     left: 0,
     width: "100%",
