@@ -25,6 +25,7 @@ mongoose.connect(MONGODB_URI, {
 const userSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
+  type: String,
   name: String,
   age: Number,
   bloodSugar: Number,
@@ -37,7 +38,7 @@ const User = mongoose.model("User", userSchema);
 // 📝 **Signup Route (Hash password before saving)**
 app.post("/api/signup", async (req, res) => {
   try {
-    const { email, password, name, age, bloodSugar, height, weight } = req.body;
+    const { email, type, password, name, age, bloodSugar, height, weight } = req.body;
 
     // Check if user exists
     const existingUser = await User.findOne({ email });

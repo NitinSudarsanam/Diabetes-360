@@ -21,6 +21,9 @@ const SignupPage = () => {
   return (
     <div className="min-h-screen bg-sky-400 p-8 text-white font-mono">
       <Navigation />
+      <h1 className="text-4xl font-bold text-center mb-8" 
+          style={{ textShadow: '3px 3px 0px #0369a1', padding: '80px 20px 20px' }}>
+      </h1>
       <div className="max-w-md mx-auto">
         <div style={{
           background: 'linear-gradient(#fcd34d, #f59e0b)',
