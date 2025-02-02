@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { GlobalStateProvider} from '../../backend/context/GlobalStateContext'; // Adjust the path based on your project structure
+import { GlobalStateProvider} from './context/GlobalStateContext'; // Adjust the path based on your project structure
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
