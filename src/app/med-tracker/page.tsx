@@ -132,7 +132,7 @@ const AddMedication = () => {
           <p className="mb-2 text-xl" style={{ textShadow: '2px 2px 0px #065f46' }}>
             ⭐ KEEP UP WITH YOUR MEDS! ⭐
           </p>
-          <p className="text-sm">Press B to Go Back | Press A to Mark Taken | Press ❌ to Remove</p>
+          <p className="text-sm">Press B to Go Back | Press A to Mark Taken | Press the Trash Icon to Remove</p>
         </div>
       </footer>
     </div>
