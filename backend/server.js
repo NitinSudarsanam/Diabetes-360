@@ -9,9 +9,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const PORT = process.env.PORT || 4000;
-const MONGODB_URI = process.env.MONGODB_URI;
-const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret"; // Ensure to set JWT_SECRET in .env file
+const PORT = 4000;
+const MONGODB_URI = "mongodb+srv://pierrejoseph:O1cUCLVKwjRk3UWB@diabetes-360.5s5zl.mongodb.net/?retryWrites=true&w=majority&appName=diabetes-360"
+const JWT_SECRET = "your_jwt_secret"; 
 
 // Connect to MongoDB
 mongoose.connect(MONGODB_URI, {
