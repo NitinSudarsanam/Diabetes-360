@@ -1,10 +1,13 @@
 import Link from "next/link";
+import {useGlobalState} from '../context/GlobalStateContext'; // Adjust the path based on your project structure
+import {useEffect} from 'react'
 
 const Navigation: React.FC = () => {
   return (
     <nav style={styles.navbar}>
       <div style={styles.logo}><Link href="/">Diabetes 360</Link></div>
       <ul style={styles.navLinks}>
+        <li><Link href="/login" style={styles.link}>🔒 Login</Link></li>
         <li><Link href="/" style={styles.link}>🏠 Home</Link></li>
         <li><Link href="/dashboard" style={styles.link}>📊 Dashboard</Link></li>
         <li><Link href="/exercise-tracker" style={styles.link}>🏋️ Exercise</Link></li>
@@ -12,6 +15,7 @@ const Navigation: React.FC = () => {
         <li><Link href="/med-tracker" style={styles.link}>💊 Medication</Link></li>
       </ul>
     </nav>
+
   );
 };
 
