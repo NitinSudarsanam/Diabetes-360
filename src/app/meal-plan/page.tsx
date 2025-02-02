@@ -191,8 +191,9 @@ const MealPlanPage = () => {
       backgroundImage: 'linear-gradient(transparent 95%, #7dd3fc 95%), linear-gradient(90deg, transparent 95%, #7dd3fc 95%)',
       backgroundSize: '40px 40px'
     }}>
+      <Navigation />
       <h1 className="text-4xl font-bold text-center mb-8"
-        style={{ textShadow: '3px 3px 0px #0369a1' }}>
+        style={{ textShadow: '3px 3px 0px #0369a1', padding: '80px 20px 20px' }}>
         POWER-UP MEAL PLANNER
       </h1>
 
