@@ -107,7 +107,7 @@ const MealPlanPage = () => {
   const [userRequest, setUserRequest] = useState('');
   const [isRequestProcessed, setIsRequestProcessed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const aiEnabled = false; // or false, depending on your requirement
+  const aiEnabled = true; // or false, depending on your requirement
 
   const handleRequestSubmit = async () => {
     setIsLoading(true);
@@ -120,15 +120,26 @@ const MealPlanPage = () => {
       console.log("prompt: " + prompt);
       const mealText = await model.generateContent(prompt);
       console.log(mealText.response.text());
-      const genMealPlan = JSON.parse(mealText.response.text());
+      let genMealPlan;
+      try {
+        genMealPlan = JSON.parse(mealText.response.text());
+      } catch (error) {
+        console.log("Failed to parse meal plan JSON:", error);
+        setIsLoading(false);
+        alert("I'm sorry—we are currently unable to fulfill that request. Please adjust your prompt and try again!");
+        setUserRequest('');
+        return;
+      }
       setMealPlan(genMealPlan); // Set the meal plan after processing the request
-    } else {
-      setMealPlan(sampleMealPlan);
-    }
-    setTimeout(() => {
       setIsRequestProcessed(true);
       setIsLoading(false);
-    }, 1000);
+    } else {
+      setMealPlan(sampleMealPlan);
+      setTimeout(() => {
+        setIsRequestProcessed(true);
+        setIsLoading(false);
+      }, 1000);
+    }
   };
 
   const handleRefreshMealPlan = () => {

@@ -8,9 +8,7 @@ import {
   Flame,
   Trophy,
   Calendar,
-  CalendarCheck,
-  ArrowUp,
-  ArrowDown
+  CalendarCheck
 } from 'lucide-react';
 import Navigation from '@/app/components/Navigation';
 import { Line } from 'react-chartjs-2';
@@ -18,7 +16,6 @@ import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement
 
 // Register necessary components
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
-
 
 const ExerciseTracker = () => {
   const stats = {
@@ -29,13 +26,6 @@ const ExerciseTracker = () => {
     personalBest: "60 min workout",
     nextWorkout: "Tomorrow 9AM"
   };
-
-  const exercises = [
-    { name: "Push-ups", sets: "3", reps: "12", diff: "+2" },
-    { name: "Squats", sets: "4", reps: "15", diff: "+5" },
-    { name: "Plank", sets: "3", reps: "45s", diff: "+10s" },
-    { name: "Lunges", sets: "3", reps: "10", diff: "-2" }
-  ];
 
   const PixelArtGraph: React.FC = () => {
     useEffect(() => {
@@ -73,54 +63,54 @@ const ExerciseTracker = () => {
     const options = {
       responsive: true,
       plugins: {
-      legend: {
-        display: false, // Hide legend
-      },
-      tooltip: {
-        enabled: false, // Disable tooltips
-      },
+        legend: {
+          display: false, // Hide legend
+        },
+        tooltip: {
+          enabled: false, // Disable tooltips
+        },
       },
       scales: {
-      x: {
-        grid: {
-        color: 'white', // White grid for retro feel
-        lineWidth: 3,
+        x: {
+          grid: {
+            color: 'white', // White grid for retro feel
+            lineWidth: 3,
+          },
+          ticks: {
+            font: { family: 'Courier New', size: 14, weight: 'bold' as const },
+            color: 'white',
+          },
+          title: {
+            display: true,
+            text: 'Months',
+            font: { family: 'Courier New', size: 16, weight: 'bold' as const },
+            color: 'white',
+          },
         },
-        ticks: {
-        font: { family: 'Courier New', size: 14, weight: 'bold' as const },
-        color: 'white',
+        y: {
+          grid: {
+            color: 'white', // White grid for retro feel
+            lineWidth: 3,
+          },
+          ticks: {
+            font: { family: 'Courier New', size: 14, weight: 'bold' as const },
+            color: 'white',
+          },
+          title: {
+            display: true,
+            text: 'Blood Sugar (mg/dL)',
+            font: { family: 'Courier New', size: 16, weight: 'bold' as const },
+            color: 'white',
+          },
         },
-        title: {
-        display: true,
-        text: 'Months',
-        font: { family: 'Courier New', size: 16, weight: 'bold' as const },
-        color: 'white',
-        },
-      },
-      y: {
-        grid: {
-        color: 'white', // White grid for retro feel
-        lineWidth: 3,
-        },
-        ticks: {
-        font: { family: 'Courier New', size: 14, weight: 'bold' as const },
-        color: 'white',
-        },
-        title: {
-        display: true,
-        text: 'Blood Sugar (mg/dL)',
-        font: { family: 'Courier New', size: 16, weight: 'bold' as const },
-        color: 'white',
-        },
-      },
       },
       elements: {
-      line: {
-        tension: 0, // No smoothing for pixelated look
-      },
-      point: {
-        hoverRadius: 12, // Keep the same size when hovered
-      },
+        line: {
+          tension: 0, // No smoothing for pixelated look
+        },
+        point: {
+          hoverRadius: 12, // Keep the same size when hovered
+        },
       },
     };
 
@@ -132,6 +122,20 @@ const ExerciseTracker = () => {
     );
   };
 
+  const [workoutStats, setWorkoutStats] = React.useState({
+    cardioMinutes: '',
+    weightTrainingMinutes: '',
+  });
+
+  const handleWorkoutChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setWorkoutStats(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleWorkoutSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert('Workout stats updated successfully!');
+  };
 
   return (
     <div className="min-h-screen bg-sky-400 p-8 text-white font-mono" style={{
@@ -175,56 +179,52 @@ const ExerciseTracker = () => {
             </div>
           ))}
         </div>
-        <div className="rounded-lg p-6 mb-8" style={{
-          background: 'linear-gradient(#60a5fa,rgb(49, 107, 232))',
-          border: '4px solid #fff',
-          boxShadow: '4px 4px 0px #1e40af',
-          opacity: 0.9
-        }}><PixelArtGraph /></div>
 
-        {/* Exercise Progress */}
-        <div className="rounded-lg p-6 mb-8" style={{
+{/* New Workout Input Section */}
+<div className="rounded-lg p-6 mb-8" style={{
           background: 'linear-gradient(#34d399, #059669)',
           border: '4px solid #fff',
           boxShadow: '4px 4px 0px #065f46',
           opacity: 0.9
         }}>
           <h2 className="text-2xl font-bold mb-4" style={{ textShadow: '2px 2px 0px #1e40af' }}>
-            Today&apos;s Workout Progress
+            Log Today&apos;s Workout To Level Up!
           </h2>
-          <div className="space-y-4">
-            {exercises.map((exercise, index) => (
-              <div
-                key={index}
-                className="p-4 rounded"
-                style={{
-                  background: 'linear-gradient(#60a5fa, #2563eb)',
-                  border: '2px solid #fff',
-                  boxShadow: '2px 2px 0px #1e40af'
-                }}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <Dumbbell className="w-5 h-5 mr-2" />
-                    <span className="font-bold">{exercise.name}</span>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <span>{exercise.sets} sets</span>
-                    <span>{exercise.reps}/set</span>
-                    <span className="flex items-center">
-                      {parseInt(exercise.diff) > 0 ? (
-                        <ArrowUp className="w-4 h-4 text-green-200" />
-                      ) : (
-                        <ArrowDown className="w-4 h-4 text-red-200" />
-                      )}
-                      {exercise.diff}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <form onSubmit={handleWorkoutSubmit} className="space-y-4">
+            <div className="flex items-center space-x-4">
+              <Dumbbell className="w-6 h-6" />
+              <input
+                type="number"
+                name="cardioMinutes"
+                value={workoutStats.cardioMinutes}
+                onChange={handleWorkoutChange}
+                className="w-full p-3 rounded-lg text-black"
+                placeholder="Enter cardio minutes"
+              />
+            </div>
+            <div className="flex items-center space-x-4">
+              <Dumbbell className="w-6 h-6" />
+              <input
+                type="number"
+                name="weightTrainingMinutes"
+                value={workoutStats.weightTrainingMinutes}
+                onChange={handleWorkoutChange}
+                className="w-full p-3 rounded-lg text-black"
+                placeholder="Enter weight training minutes"
+              />
+            </div>
+            <button type="submit" className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+              Log Workout
+            </button>
+          </form>
         </div>
+
+        <div className="rounded-lg p-6 mb-8" style={{
+          background: 'linear-gradient(#60a5fa,rgb(49, 107, 232))',
+          border: '4px solid #fff',
+          boxShadow: '4px 4px 0px #1e40af',
+          opacity: 0.9
+        }}><PixelArtGraph /></div>
 
         {/* Achievement Unlocked */}
         <div className="rounded-lg p-6" style={{
