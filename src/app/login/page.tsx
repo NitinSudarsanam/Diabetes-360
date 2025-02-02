@@ -31,25 +31,26 @@ const LoginPage: NextPage = () => {
       const data = response.data as { token: string };
       if (data.token) {
         localStorage.setItem("authToken", data.token); // Store token in local storage
-        const userInfoServer = await axios.get<{
+        const userInfoServer = await axios.get(
+          "https://fgyis6cpq9.us-east-1.awsapprunner.com/api/users",
+          {headers: {address: email}}
+        );
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const userData = (userInfoServer.data as any)[0] as {
+          name: string;
+          email: string;
+          age: number;
           height: number;
           weight: number;
           bloodSugar: number;
           diabetesDuration: number;
+          meds: string[];
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          meds: any;
+          cardioLog: any[];
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          cardioLog: any;
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          weightsLog: any;
-          email: string;
-          name: string; age: number 
-}>(
-          "https://fgyis6cpq9.us-east-1.awsapprunner.com/api/users",
-          {headers: {address: email}}
-        );
-        console.log(userInfoServer.data);
-        const userData = userInfoServer.data;
+          weightsLog: any[];
+        };
+        console.log(userData.name);
         globalState.name = userData.name;
         globalState.email = userData.email;
         globalState.age = userData.age;
@@ -61,6 +62,7 @@ const LoginPage: NextPage = () => {
         globalState.cardioLog = userData.cardioLog;
         globalState.weightsLog = userData.weightsLog;
         setGlobalState({ isAuthenticated: true });
+        console.log(globalState);
         router.push("/dashboard"); // Redirect after successful login
       } else {
         setError("Login failed: No token received");

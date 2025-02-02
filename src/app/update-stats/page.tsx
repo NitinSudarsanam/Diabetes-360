@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -9,6 +10,7 @@ import {useGlobalState} from '../context/GlobalStateContext'; // Adjust the path
 import { useRouter } from 'next/navigation';
 
 const UpdateStatsPage: NextPage = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { globalState, setGlobalState } = useGlobalState();
   const router = useRouter();
 
@@ -23,12 +25,12 @@ const UpdateStatsPage: NextPage = () => {
       }
 
   const [stats, setStats] = useState({
-    name: "",
-    age: "",
-    height: "",
-    weight: "",
-    bloodSugar: "",
-    diabetesDuration: "",
+    name: globalState.name,
+    age: globalState.age,
+    height: globalState.height,
+    weight: globalState.weight,
+    bloodSugar: globalState.bloodSugar,
+    diabetesDuration: globalState.diabetesDuration,
   });
   
   const [loading, setLoading] = useState(false);
@@ -53,6 +55,7 @@ const UpdateStatsPage: NextPage = () => {
 
       if (response.status === 200) {
         setSuccess(true);
+        /*
         setStats({
           name: "",
           age: "",
@@ -60,8 +63,9 @@ const UpdateStatsPage: NextPage = () => {
           weight: "",
           bloodSugar: "",
           diabetesDuration: "",
-        });
+        });*/
       }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       setError("Failed to update stats. Please try again.");
     } finally {
