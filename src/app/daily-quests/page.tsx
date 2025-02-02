@@ -29,7 +29,7 @@ const DailyQuests = () => {
               border: '4px solid #fff',
               opacity: 0.9
             }}>
-          DAILY QUESTS: DIABETES ADVENTURE
+          DAILY QUESTS: DIABETES JOURNEY
         </h1>
         <p className="text-2xl text-white" style={{ textShadow: '2px 2px 0px #0369a1' }}>
           ★ Complete these quests to level up your diabetes management! ★
