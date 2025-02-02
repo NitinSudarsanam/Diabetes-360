@@ -64,7 +64,6 @@ const DashboardPage: NextPage = () => {
     bloodSugar: globalState.bloodSugar,
     diabetesDuration: globalState.diabetesDuration
   };
-  console.log(globalState);
 
   // Hydration fix: useEffect to delay client-specific logic
   useEffect(() => {

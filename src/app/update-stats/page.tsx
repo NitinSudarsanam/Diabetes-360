@@ -6,7 +6,7 @@ import axios from "axios";
 import { NextPage } from "next";
 import { CalendarCheck, User, Ruler, Heart, BarChart2 } from "lucide-react";
 import Navigation from "@/app/components/Navigation";
-import {useGlobalState} from '../context/GlobalStateContext'; // Adjust the path based on your project structure
+import { useGlobalState } from '../context/GlobalStateContext'; // Adjust the path based on your project structure
 import { useRouter } from 'next/navigation';
 
 const UpdateStatsPage: NextPage = () => {
@@ -15,18 +15,17 @@ const UpdateStatsPage: NextPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-        if (!globalState.isAuthenticated) {
-          router.push('/login');
-        }
-      }, [globalState.isAuthenticated, router]);
-    
-      if (!globalState.isAuthenticated) {
-        return <div>Loading...</div>;
-      }
-    
+    if (!globalState.isAuthenticated) {
+      router.push('/login');
+    }
+  }, [globalState.isAuthenticated, router]);
+
+  if (!globalState.isAuthenticated) {
+    return <div>Loading...</div>;
+  }
+
   // fetch stats from mongoDB
-  
-  console.log(globalState);
+
   const [stats, setStats] = useState({
     email: globalState.email,
     name: globalState.name || "",
@@ -36,7 +35,7 @@ const UpdateStatsPage: NextPage = () => {
     bloodSugar: globalState.bloodSugar || "",
     diabetesDuration: globalState.diabetesDuration || "",
   });
-  
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -53,11 +52,19 @@ const UpdateStatsPage: NextPage = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:8080/api/update-stats", stats, {
+      const response = await axios.post("https://fgyis6cpq9.us-east-1.awsapprunner.com/api/update-stats", stats, {
         headers: { "Content-Type": "application/json" },
       });
 
       if (response.status === 200) {
+        // update global variables to match contents of text boxes. Values should be empty strings or 0 if the boxes are empty
+        globalState.name = stats.name;
+        globalState.age = stats.age;
+        globalState.height = stats.height;
+        globalState.weight = stats.weight;
+        globalState.bloodSugar = stats.bloodSugar;
+        globalState.diabetesDuration = stats.diabetesDuration;
+
         setSuccess(true);
         /*
         setStats({
@@ -69,7 +76,7 @@ const UpdateStatsPage: NextPage = () => {
           diabetesDuration: "",
         });*/
       }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       setError("Failed to update stats. Please try again.");
     } finally {
@@ -92,7 +99,7 @@ const UpdateStatsPage: NextPage = () => {
       <div className="max-w-6xl mx-auto flex-grow">
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {[ 
+            {[
               { icon: User, label: 'Name', name: 'name', type: 'text', placeholder: 'Enter your name' },
               { icon: CalendarCheck, label: 'Age (Years)', name: 'age', type: 'number', placeholder: 'Enter your age' },
               { icon: Ruler, label: 'Height (Inches)', name: 'height', type: 'text', placeholder: 'Enter your height (e.g., 73")' },
