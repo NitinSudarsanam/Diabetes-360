@@ -13,11 +13,25 @@ import {
 import Navigation from '@/app/components/Navigation';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend } from 'chart.js';
+import {useGlobalState} from '../../../backend/context/GlobalStateContext'; // Adjust the path based on your project structure
+import { useRouter } from 'next/navigation';
 
 // Register necessary components
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
 const ExerciseTracker = () => {
+  const { globalState, setGlobalState } = useGlobalState();
+  const router = useRouter();
+  useEffect(() => {
+    if (!globalState.isAuthenticated) {
+      router.push('/login');
+    }
+  }, [globalState.isAuthenticated, router]);
+
+  if (!globalState.isAuthenticated) {
+    return <div>Loading...</div>;
+  }
+
   const stats = {
     caloriesBurned: "450 kcal",
     workoutTime: "45 minutes",

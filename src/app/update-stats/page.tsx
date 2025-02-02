@@ -1,35 +1,72 @@
-"use client"
+"use client";
 
-import { useState } from 'react';
-import { NextPage } from 'next';
-import { CalendarCheck, User, Ruler, Heart, BarChart2 } from 'lucide-react';
-import Navigation from '@/app/components/Navigation';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { NextPage } from "next";
+import { CalendarCheck, User, Ruler, Heart, BarChart2 } from "lucide-react";
+import Navigation from "@/app/components/Navigation";
+import {useGlobalState} from '../../../backend/context/GlobalStateContext'; // Adjust the path based on your project structure
 import { useRouter } from 'next/navigation';
 
 const UpdateStatsPage: NextPage = () => {
-  const [stats, setStats] = useState({
-    name: '',
-    age: '',
-    height: '',
-    weight: '',
-    bloodSugar: '',
-    diabetesDuration: ''
-  });
+  const { globalState, setGlobalState } = useGlobalState();
+  const router = useRouter();
 
-  const router = useRouter(); // Initialize useRouter for navigation
+  useEffect(() => {
+        if (!globalState.isAuthenticated) {
+          router.push('/login');
+        }
+      }, [globalState.isAuthenticated, router]);
+    
+      if (!globalState.isAuthenticated) {
+        return <div>Loading...</div>;
+      }
+
+  const [stats, setStats] = useState({
+    name: "",
+    age: "",
+    height: "",
+    weight: "",
+    bloodSugar: "",
+    diabetesDuration: "",
+  });
+  
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setStats(prev => ({ ...prev, [name]: value }));
+    setStats((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Stats updated successfully!');
-  };
+    setError("");
+    setSuccess(false);
+    setLoading(true);
 
-  const handleNavigateBack = () => {
-    router.push('/dashboard'); // Navigate to the dashboard page
+    try {
+      const response = await axios.post("http://localhost:4000/api/update-stats", stats, {
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (response.status === 200) {
+        setSuccess(true);
+        setStats({
+          name: "",
+          age: "",
+          height: "",
+          weight: "",
+          bloodSugar: "",
+          diabetesDuration: "",
+        });
+      }
+    } catch (err) {
+      setError("Failed to update stats. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -39,7 +76,6 @@ const UpdateStatsPage: NextPage = () => {
         backgroundSize: '40px 40px'
       }}>
       <Navigation />
-
       <h1 className="text-4xl font-bold text-center mb-8"
         style={{ textShadow: '3px 3px 0px #0369a1', padding: '80px 20px 20px' }}>
         UPDATE YOUR STATS
@@ -79,7 +115,9 @@ const UpdateStatsPage: NextPage = () => {
             ))}
           </div>
 
-          {/* Centered button */}
+          {error && <p className="text-red-600 text-center">{error}</p>}
+          {success && <p className="text-green-600 text-center">Stats updated successfully!</p>}
+
           <div className="flex justify-center mt-6">
             <button
               type="submit"
@@ -88,25 +126,13 @@ const UpdateStatsPage: NextPage = () => {
                 background: "linear-gradient(#fcd34d, #f59e0b)",
                 boxShadow: "4px 4px 0px #92400e",
                 textShadow: "2px 2px 0px #92400e"
-              }}>
-              Update Stats
+              }}
+              disabled={loading}
+            >
+              {loading ? "Updating..." : "Update Stats"}
             </button>
           </div>
         </form>
-
-        {/* Navigate back button */}
-        <div className="flex justify-center mt-6">
-          <button
-            onClick={handleNavigateBack}
-            className="px-6 py-3 text-xl font-bold text-white border-4 border-white rounded-lg shadow-lg transition-transform transform hover:-translate-y-1"
-            style={{
-              background: "linear-gradient(#60a5fa, #3b82f6)",
-              boxShadow: "4px 4px 0px #1e40af",
-              textShadow: "2px 2px 0px #1e40af"
-            }}>
-            Go Back to Dashboard
-          </button>
-        </div>
       </div>
     </div>
   );

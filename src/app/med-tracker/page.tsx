@@ -1,10 +1,25 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navigation from '@/app/components/Navigation';
 import { Syringe, PlusCircle, Trash2 } from 'lucide-react';
+import {useGlobalState} from '../../../backend/context/GlobalStateContext'; // Adjust the path based on your project structure
+import { useRouter } from 'next/navigation';
 
 const AddMedication = () => {
+  const { globalState, setGlobalState } = useGlobalState();
+  const router = useRouter();
+  
+    useEffect(() => {
+      if (!globalState.isAuthenticated) {
+        router.push('/login');
+      }
+    }, [globalState.isAuthenticated, router]);
+  
+    if (!globalState.isAuthenticated) {
+      return <div>Loading...</div>;
+    }
+  
   const [medications, setMedications] = useState([
     { id: 1, name: "Insulin Shot", details: "Fast-acting insulin before meals.", dosage: "10 units", taken: false },
     { id: 2, name: "Metformin", details: "Helps control blood sugar levels.", dosage: "500 mg", taken: false },

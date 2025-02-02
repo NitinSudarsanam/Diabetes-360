@@ -1,9 +1,11 @@
+
 const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const cors = require("cors");
 const jwt = require("jsonwebtoken"); // Import jwt
 require("dotenv").config();
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 app.use(cors());

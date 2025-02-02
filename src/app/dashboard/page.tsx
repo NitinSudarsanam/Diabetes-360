@@ -7,6 +7,7 @@ import Navigation from '@/app/components/Navigation';
 import { useRouter } from 'next/navigation';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend } from 'chart.js';
+import {useGlobalState} from '../../../backend/context/GlobalStateContext'; // Adjust the path based on your project structure
 
 // Register necessary components
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
@@ -20,8 +21,20 @@ const stats = {
   diabetesDuration: "5 Years"
 };
 
+
 const NavigationButton = ({ destination, label }: { destination: string; label: string }) => {
   const router = useRouter();
+
+  const { globalState, setGlobalState } = useGlobalState();
+  useEffect(() => {
+    if (!globalState.isAuthenticated) {
+      router.push('/login');
+    }
+  }, [globalState.isAuthenticated, router]);
+
+  if (!globalState.isAuthenticated) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <button

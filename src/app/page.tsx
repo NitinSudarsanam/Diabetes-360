@@ -4,8 +4,10 @@ import React from 'react';
 
 import Navigation from '@/app/components/Navigation';
 import { Heart, Activity, Cookie, Apple, Syringe, Book } from 'lucide-react';
-
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 const Home = () => {
+  
   return (
     <div className="min-h-screen bg-sky-400 p-8 text-white font-mono relative overflow-hidden" style={{
       backgroundImage: 'linear-gradient(transparent 95%, #7dd3fc 95%), linear-gradient(90deg, transparent 95%, #7dd3fc 95%)',
