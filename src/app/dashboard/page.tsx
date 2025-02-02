@@ -1,6 +1,6 @@
 "use client"
 
-import { Activity, TrendingUp, Cookie, Heart, CalendarCheck, Timer } from 'lucide-react';
+import { CalendarCheck, User, Ruler, Heart, BarChart2 } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import Navigation from '@/app/components/Navigation';
@@ -12,12 +12,12 @@ import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
 const stats = {
-  avgBloodSugar: "120 mg/dL",
-  lastMedication: "2 hours ago",
-  exerciseStreak: "5 days",
-  nextMeal: "Lunch in 1 hour",
-  dailySteps: "8,450",
-  weeklyExercise: "4.5 hours"
+  name: "John Doe",
+  age: "30 Years",
+  height: "5'8 Feet",
+  weight: "160 lbs",
+  bloodSugar: "120 mg/dL",
+  diabetesDuration: "5 Years"
 };
 
 const NavigationButton = ({ destination, label }: { destination: string; label: string }) => {
@@ -162,13 +162,13 @@ const DashboardPage: NextPage = () => {
       <div className="max-w-6xl mx-auto flex-grow">
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {[
-            { icon: Cookie, label: "Avg Blood Sugar", value: stats.avgBloodSugar },
-            { icon: Timer, label: "Last Power-Up", value: stats.lastMedication },
-            { icon: Activity, label: "Exercise Streak", value: stats.exerciseStreak },
-            { icon: CalendarCheck, label: "Next Meal", value: stats.nextMeal },
-            { icon: TrendingUp, label: "Daily Steps", value: stats.dailySteps },
-            { icon: Heart, label: "Weekly Exercise", value: stats.weeklyExercise }
+          {[ 
+            { icon: User, label: "Name", value: stats.name },
+            { icon: CalendarCheck, label: "Age", value: stats.age },
+            { icon: Ruler, label: "Height", value: stats.height },
+            { icon: BarChart2, label: "Weight", value: stats.weight },
+            { icon: Heart, label: "Blood Sugar", value: stats.bloodSugar },
+            { icon: CalendarCheck, label: "Diabetes Duration", value: stats.diabetesDuration }
           ].map((stat, index) => (
             <div
               key={index}
@@ -195,7 +195,7 @@ const DashboardPage: NextPage = () => {
         <div className="w-full flex justify-center py-6">
           <NavigationButton destination="/update-stats" label="Update Stats" />
         </div>
-        
+
         {/* Pixel Art Graph */}
         <div className="rounded-lg p-6 mb-8" style={{
           background: 'linear-gradient(#60a5fa,rgb(49, 107, 232))',

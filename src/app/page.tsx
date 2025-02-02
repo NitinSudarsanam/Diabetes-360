@@ -33,7 +33,7 @@ const Home = () => {
           DIABETES 360
         </h1>
         <p className="text-2xl text-white" style={{ textShadow: '2px 2px 0px #0369a1' }}>
-          ★ Your Health Adventure Begins Here! ★
+          ★ Your Health Journey Begins Here! ★
         </p>
       </header>
 

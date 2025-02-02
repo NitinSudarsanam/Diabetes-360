@@ -50,10 +50,10 @@ const UpdateStatsPage: NextPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {[ 
               { icon: User, label: 'Name', name: 'name', type: 'text', placeholder: 'Enter your name' },
-              { icon: CalendarCheck, label: 'Age', name: 'age', type: 'number', placeholder: 'Enter your age' },
-              { icon: Ruler, label: 'Height', name: 'height', type: 'text', placeholder: 'Enter your height (e.g., 5\'8")' },
-              { icon: BarChart2, label: 'Weight', name: 'weight', type: 'text', placeholder: 'Enter your weight (in lbs)' },
-              { icon: Heart, label: 'Blood Sugar', name: 'bloodSugar', type: 'text', placeholder: 'Enter your blood sugar level' },
+              { icon: CalendarCheck, label: 'Age (Years)', name: 'age', type: 'number', placeholder: 'Enter your age' },
+              { icon: Ruler, label: 'Height (Inches)', name: 'height', type: 'text', placeholder: 'Enter your height (e.g., 73")' },
+              { icon: BarChart2, label: 'Weight (lbs)', name: 'weight', type: 'text', placeholder: 'Enter your weight (in lbs)' },
+              { icon: Heart, label: 'Blood Sugar (mg/dL)', name: 'bloodSugar', type: 'text', placeholder: 'Enter your blood sugar level' },
               { icon: CalendarCheck, label: 'Diabetes Duration', name: 'diabetesDuration', type: 'number', placeholder: 'Enter the number of years' },
             ].map((field, index) => (
               <div key={index} className="p-6 rounded transform hover:-translate-y-1 transition-transform"
