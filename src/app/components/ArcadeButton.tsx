@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const ArcadeButton = styled.button`
-  background-color: #007bff; /* Mario-esque blue background */
   color: white;
   border: 3px solid #0056b3; /* Slightly darker blue for the border */
   padding: 12px 24px;
@@ -12,14 +11,14 @@ const ArcadeButton = styled.button`
   transition: all 0.3s ease;
   
   /* Subtle blocky text shadow */
-  text-shadow: 0.5px 0.5px 0px #ff6600, 1px 1px 0px #ff3399;
+  text-shadow: 0.5px 0.5px 0pxrgb(163, 96, 51), 1px 1px 0px #ff3399;
   
   /* Grid background effect */
   background-image: 
     linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
     linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px);
   background-size: 12px 12px; /* Pixel grid */
-  background-color: #007bff; /* Button background color */
+  background-color:rgb(159, 203, 250); /* Button background color */
   
   /* Hover effect: Slight color shift and glowing */
   &:hover {

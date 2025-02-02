@@ -1,194 +1,114 @@
 "use client"
 
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { NextPage } from 'next';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import { User, Mail, Lock, Heart } from 'lucide-react';
 import Navigation from '@/app/components/Navigation';
 import { useRouter } from 'next/navigation'; 
 
-// Styled Components
+const SignupPage = () => {
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    diabetesType: ''
+  });
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #111;
-  color: #fff;
-  font-family: 'Arial', sans-serif;
-  padding: 40px;
-`;
-
-const Header = styled.header`
-  background: linear-gradient(135deg, #ff66cc, #00ccff);
-  width: 100%;
-  padding: 20px;
-  text-align: center;
-  font-size: 2em;
-  font-weight: bold;
-  border-bottom: 5px solid #fff;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-`;
-
-const FormContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #222;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-  margin-top: 20px;
-  width: 100%;
-  max-width: 500px;
-`;
-
-const InputField = styled.input`
-  width: 80%;
-  padding: 12px;
-  margin: 10px 0;
-  background-color: #444;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  font-size: 1.2em;
-`;
-
-const Button = styled.button`
-  background-color: #ff3399;
-  color: white;
-  border: none;
-  padding: 12px 30px;
-  font-size: 1.5em;
-  cursor: pointer;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: #00ccff;
-    transform: scale(1.05);
-  }
-`;
-const SignUpPage: NextPage = () => {
-  // States for form input
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [age, setAge] = useState('');
-  const [bloodSugar, setBloodSugar] = useState('');
-  const [height, setHeight] = useState('');
-  const [weight, setWeight] = useState('');
-
-  // Hydration fix: useEffect to delay client-specific logic
-  const [isClient, setIsClient] = useState(false);
-
-  const router = useRouter(); // Move useRouter hook here
-
-  useEffect(() => {
-    setIsClient(true); // This will only be set after component mounts
-  }, []);
-
-  // SignUp form submission handler
-  const handleSignUp = async (e: React.FormEvent) => {
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-  
-    if (password !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
-  
-    const formData = { email, password, name, age, bloodSugar, height, weight };
-  
-    try {
-      // Send the formData to the backend via POST request
-      const response = await axios.post('http://localhost:4000/api/signup', formData, {
-        headers: { "Content-Type": "application/json" }
-      });
-  
-      console.log('Form submitted successfully:', response.data);
-      router.push('/dashboard');  // Redirect after successful signup
-    } catch (error) {
-      console.error('Error submitting form:', error);
-    }
+    // Handle signup logic
   };
 
-  // Prevent rendering the page until mounted on client side
-  if (!isClient) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <Container>
+    <div className="min-h-screen bg-sky-400 p-8 text-white font-mono">
       <Navigation />
-      <Header>Sign Up</Header>
+      <div className="max-w-md mx-auto">
+        <div style={{
+          background: 'linear-gradient(#fcd34d, #f59e0b)',
+          border: '4px solid #fff',
+          boxShadow: '4px 4px 0px #92400e',
+          borderRadius: '8px',
+          opacity: 0.9,
+           padding: '20px 20px 20px'
+        }}>
+          <form onSubmit={handleSubmit} className="p-6 space-y-4">
+            <h2 className="text-2xl font-bold text-center mb-6" 
+                style={{ textShadow: '2px 2px 0px #92400e' }}>
+              CREATE YOUR PLAYER
+            </h2>
+            
+            <div className="space-y-2">
+              <label className="block">Username</label>
+              <div className="flex items-center bg-white rounded p-2">
+                <User className="text-amber-600 w-5 h-5 mr-2" />
+                <input
+                  type="text"
+                  className="flex-1 text-black outline-none bg-transparent"
+                  value={formData.username}
+                  onChange={(e) => setFormData({...formData, username: e.target.value})}
+                />
+              </div>
+            </div>
 
-      <FormContainer>
-        <form onSubmit={handleSignUp}>
-          <InputField
-            type="text"
-            placeholder="Full Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-          <InputField
-            type="email"
-            placeholder="Email Address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <InputField
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <InputField
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
+            <div className="space-y-2">
+              <label className="block">Email</label>
+              <div className="flex items-center bg-white rounded p-2">
+                <Mail className="text-amber-600 w-5 h-5 mr-2" />
+                <input
+                  type="email"
+                  className="flex-1 text-black outline-none bg-transparent"
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                />
+              </div>
+            </div>
 
-          <InputField
-            type="age"
-            placeholder="What is your Age?"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            required
-          />
-          <InputField
-            type="bloodSugar"
-            placeholder="What is your Blood Sugar?"
-            value={bloodSugar}
-            onChange={(e) => setBloodSugar(e.target.value)}
-            required
-          />
-          <InputField
-            type="height"
-            placeholder="What is your Height?"
-            value={height}
-            onChange={(e) => setHeight(e.target.value)}
-            required
-          />
-          <InputField
-            type="weight"
-            placeholder="What is your Weight?"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-            required
-          />
+            <div className="space-y-2">
+              <label className="block">Password</label>
+              <div className="flex items-center bg-white rounded p-2">
+                <Lock className="text-amber-600 w-5 h-5 mr-2" />
+                <input
+                  type="password"
+                  className="flex-1 text-black outline-none bg-transparent"
+                  value={formData.password}
+                  onChange={(e) => setFormData({...formData, password: e.target.value})}
+                />
+              </div>
+            </div>
 
-          <Button type="submit">Sign Up</Button>
-        </form>
-      </FormContainer>
-    </Container>
+            <div className="space-y-2">
+              <label className="block">Diabetes Type</label>
+              <div className="flex items-center bg-white rounded p-2">
+                <Heart className="text-amber-600 w-5 h-5 mr-2" />
+                <select
+                  className="flex-1 text-black outline-none bg-transparent"
+                  value={formData.diabetesType}
+                  onChange={(e) => setFormData({...formData, diabetesType: e.target.value})}
+                >
+                  <option value="">Select Type</option>
+                  <option value="type1">Type 1</option>
+                  <option value="type2">Type 2</option>
+                  <option value="prediabetes">Prediabetes</option>
+                </select>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full p-3 mt-6 rounded font-bold transform hover:-translate-y-1 transition-transform duration-200"
+              style={{
+                background: 'linear-gradient(#34d399, #059669)',
+                border: '2px solid #fff',
+                boxShadow: '2px 2px 0px #065f46',
+                textShadow: '1px 1px 0px #065f46'
+              }}
+            >
+              START ADVENTURE!
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default SignUpPage;
+export default SignupPage;

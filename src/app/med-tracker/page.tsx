@@ -1,231 +1,142 @@
 "use client"
 
-import React, { useState, useEffect } from 'react';
-import { NextPage } from 'next';
-import styled from 'styled-components';
+import React, { useState } from 'react';
 import Navigation from '@/app/components/Navigation';
+import { Syringe, PlusCircle, Trash2 } from 'lucide-react';
 
-// Styled Components
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #111;
-  color: #fff;
-  font-family: 'Arial', sans-serif;
-  padding: 40px;
-`;
+const AddMedication = () => {
+  const [medications, setMedications] = useState([
+    { id: 1, name: "Insulin Shot", details: "Fast-acting insulin before meals.", dosage: "10 units", taken: false },
+    { id: 2, name: "Metformin", details: "Helps control blood sugar levels.", dosage: "500 mg", taken: false },
+  ]);
 
-const Header = styled.header`
-  background: linear-gradient(135deg, #ff66cc, #00ccff);
-  width: 100%;
-  padding: 20px;
-  text-align: center;
-  font-size: 2em;
-  font-weight: bold;
-  border-bottom: 5px solid #fff;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-`;
+  const [newMedName, setNewMedName] = useState("");
+  const [newMedDetails, setNewMedDetails] = useState("");
+  const [newDosage, setNewDosage] = useState("");
 
-const FormContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #222;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-  margin-top: 20px;
-  width: 100%;
-  max-width: 500px;
-`;
-
-const InputField = styled.input`
-  width: 80%;
-  padding: 12px;
-  margin: 10px 0;
-  background-color: #444;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  font-size: 1.2em;
-`;
-
-const Button = styled.button`
-  background-color: #ff3399;
-  color: white;
-  border: none;
-  padding: 12px 30px;
-  font-size: 1.5em;
-  cursor: pointer;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: #00ccff;
-    transform: scale(1.05);
-  }
-`;
-
-const MedicationList = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 30px;
-`;
-
-const MedicationItem = styled.div`
-  background: #222;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 10px;
-  width: 80%;
-  max-width: 500px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const MedicationText = styled.p`
-  color: #fff;
-  font-size: 1.2em;
-`;
-
-const EditDeleteButton = styled.button`
-  background-color: #ff3399;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  font-size: 1em;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: #00ccff;
-    transform: scale(1.05);
-  }
-
-  &:first-child {
-    margin-right: 10px;
-  }
-`;
-
-const MedicationTrackerPage: NextPage = () => {
-  // State for managing the medication list
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [medications, setMedications] = useState<any[]>([]);
-
-  // State for input form
-  const [medicationName, setMedicationName] = useState('');
-  const [dose, setDose] = useState('');
-  const [frequency, setFrequency] = useState('');
-
-  // Hydration fix: useEffect to delay client-specific logic
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true); // Set client state after component mounts
-  }, []);
-
-  // Add new medication
   const addMedication = () => {
-    if (!medicationName || !dose || !frequency) {
-      alert('Please fill in all fields');
-      return;
-    }
-
-    const newMedication = {
-      id: new Date().getTime(),
-      medicationName,
-      dose,
-      frequency,
-    };
-
-    setMedications([...medications, newMedication]);
-
-    // Clear form
-    setMedicationName('');
-    setDose('');
-    setFrequency('');
+    if (newMedName.trim() === "" || newMedDetails.trim() === "" || newDosage.trim() === "") return;
+    setMedications([...medications, {
+      id: Date.now(),
+      name: newMedName,
+      details: newMedDetails,
+      dosage: newDosage,
+      taken: false
+    }]);
+    setNewMedName("");
+    setNewMedDetails("");
+    setNewDosage("");
   };
 
-  // Delete medication
-  const deleteMedication = (id: number) => {
+  const toggleMedication = (id: number) => {
+    setMedications(medications.map(med =>
+      med.id === id ? { ...med, taken: !med.taken } : med
+    ));
+  };
+
+  const removeMedication = (id: number) => {
     setMedications(medications.filter(med => med.id !== id));
   };
 
-  // Edit medication (optional, can implement later)
-  const editMedication = (id: number) => {
-    const medicationToEdit = medications.find(med => med.id === id);
-    if (medicationToEdit) {
-      setMedicationName(medicationToEdit.medicationName);
-      setDose(medicationToEdit.dose);
-      setFrequency(medicationToEdit.frequency);
-
-      // Remove it from the list temporarily
-      deleteMedication(id);
-    }
-  };
-
-  // Prevent rendering until mounted on client side
-  if (!isClient) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <Container>
+    <div className="min-h-screen bg-sky-400 p-8 text-white font-mono relative flex flex-col items-center"
+      style={{
+        backgroundImage: 'linear-gradient(transparent 95%, #7dd3fc 95%), linear-gradient(90deg, transparent 95%, #7dd3fc 95%)',
+        backgroundSize: '40px 40px'
+      }}>
       <Navigation />
-      <Header>Medication Tracker</Header>
 
-      <FormContainer>
-        <InputField
-          type="text"
-          placeholder="Medication Name"
-          value={medicationName}
-          onChange={(e) => setMedicationName(e.target.value)}
-        />
-        <InputField
-          type="text"
-          placeholder="Dose (e.g., 50mg)"
-          value={dose}
-          onChange={(e) => setDose(e.target.value)}
-        />
-        <InputField
-          type="text"
-          placeholder="Frequency (e.g., 2x/day)"
-          value={frequency}
-          onChange={(e) => setFrequency(e.target.value)}
-        />
-        <Button onClick={addMedication}>Add Medication</Button>
-      </FormContainer>
+      {/* Header */}
+      <h1 className="text-4xl font-bold text-center mb-8" 
+          style={{ textShadow: '3px 3px 0px #0369a1', padding: '20px 20px 20px' }}>
+      </h1>
+      <header className="text-center mb-12">
+        <h1 className="text-5xl font-bold mb-4 p-6 rounded-lg inline-block"
+          style={{
+            background: 'linear-gradient(#ef4444, #dc2626)',
+            textShadow: '4px 4px 0px #991b1b',
+            border: '4px solid #fff',
+            opacity: 0.9
+          }}>
+          ADD MEDICATION
+        </h1>
+        <p className="text-lg text-white" style={{ textShadow: '2px 2px 0px #0369a1' }}>
+          ★ Tap to take your medication! Click the trash icon to remove it. ★
+        </p>
+      </header>
 
-      <MedicationList>
-        {medications.map((med) => (
-          <MedicationItem key={med.id}>
-            <div>
-              <MedicationText>
-                <strong>{med.medicationName}</strong>
-                <br />
-                <small>{med.dose} - {med.frequency}</small>
-              </MedicationText>
+      {/* Add New Medication (Wider & Centered) */}
+      <div className="mb-12 bg-yellow-500 p-6 rounded-lg text-center shadow-lg border-4 border-white w-full max-w-2xl"
+        style={{ boxShadow: '4px 4px 0px #92400e' }}>
+        <h2 className="text-2xl font-bold mb-4">Add a New Medication</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <input
+            type="text"
+            className="p-2 border-2 border-white rounded-lg text-black w-full"
+            placeholder="Medication Name"
+            value={newMedName}
+            onChange={(e) => setNewMedName(e.target.value)}
+          />
+          <input
+            type="text"
+            className="p-2 border-2 border-white rounded-lg text-black w-full"
+            placeholder="Details (e.g., time)"
+            value={newMedDetails}
+            onChange={(e) => setNewMedDetails(e.target.value)}
+          />
+          <input
+            type="text"
+            className="p-2 border-2 border-white rounded-lg text-black w-full"
+            placeholder="Dosage (e.g., 500mg)"
+            value={newDosage}
+            onChange={(e) => setNewDosage(e.target.value)}
+          />
+        </div>
+        <button onClick={addMedication} className="mt-4 bg-green-500 p-3 rounded-lg flex items-center justify-center text-white w-full">
+          <PlusCircle className="w-6 h-6 mr-2" /> Add Medication
+        </button>
+      </div>
+
+      {/* Medication List (Stacked & Centered) */}
+      <div className="w-full max-w-lg space-y-4">
+        {medications.map(med => (
+          <div key={med.id}
+            className={`p-4 rounded-lg cursor-pointer transition-all duration-200 flex justify-between items-center
+            ${med.taken ? "bg-green-500" : "bg-yellow-500"} border-4 border-white shadow-lg`}
+            style={{ boxShadow: '4px 4px 0px #92400e' }}
+            onClick={() => toggleMedication(med.id)}>
+            <div className="flex items-center space-x-4 w-full">
+              <Syringe className="w-8 h-8" />
+              <div className="flex-1">
+                <h2 className="text-xl font-bold">{med.name}</h2>
+                <p className="text-sm">{med.details}</p>
+                <p className="text-sm font-semibold">Dosage: {med.dosage}</p>
+              </div>
+              <button onClick={(e) => { e.stopPropagation(); removeMedication(med.id); }} className="text-white">
+                <Trash2 className="w-6 h-6" />
+              </button>
             </div>
-
-            <div>
-              <EditDeleteButton onClick={() => editMedication(med.id)}>
-                Edit
-              </EditDeleteButton>
-              <EditDeleteButton onClick={() => deleteMedication(med.id)}>
-                Delete
-              </EditDeleteButton>
-            </div>
-          </MedicationItem>
+          </div>
         ))}
-      </MedicationList>
-    </Container>
+      </div>
+
+      {/* Footer */}
+      <footer className="mt-12 text-center">
+        <div className="p-4 rounded-lg inline-block"
+          style={{
+            background: 'linear-gradient(#34d399, #059669)',
+            border: '4px solid #fff',
+            boxShadow: '4px 4px 0px #065f46',
+            opacity: 0.9
+          }}>
+          <p className="mb-2 text-xl" style={{ textShadow: '2px 2px 0px #065f46' }}>
+            ⭐ KEEP UP WITH YOUR MEDS! ⭐
+          </p>
+          <p className="text-sm">Press B to Go Back | Press A to Mark Taken | Press ❌ to Remove</p>
+        </div>
+      </footer>
+    </div>
   );
 };
 
-export default MedicationTrackerPage;
+export default AddMedication;
