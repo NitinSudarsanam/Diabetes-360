@@ -1,200 +1,90 @@
 "use client"
 
 import React from 'react';
-import { NextPage } from 'next';
-import styled from 'styled-components';
+
 import Navigation from '@/app/components/Navigation';
+import { Heart, Activity, Cookie, Apple, Syringe, Book } from 'lucide-react';
 
-// Styled Components
-const Container = styled.div`
-  width: 100%;
-  margin: 0;
-  padding: 20px;
-`;
-
-const HeroSection = styled.section`
-  background: linear-gradient(135deg, #ff66cc, #00ccff);
-  padding: 50px 20px;
-  text-align: center;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-`;
-
-const HeroContent = styled.div``;
-
-const HeroHeading = styled.h1`
-  font-size: 3em;
-  color: #fff;
-`;
-
-const HeroParagraph = styled.p`
-  font-size: 1.5em;
-  color: #fff;
-`;
-
-const StartButton = styled.button`
-  background-color: #ff3399;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1.2em;
-  cursor: pointer;
-  border-radius: 5px;
-`;
-
-const FeaturesSection = styled.section`
-  padding: 40px 20px;
-  background-color: #222;
-  text-align: center;
-`;
-
-const FeaturesHeading = styled.h2`
-  font-size: 2em;
-  margin-bottom: 20px;
-`;
-
-const FeaturePanels = styled.div`
-  display: flex;
-  justify-content: space-around;
-`;
-
-const Panel = styled.div`
-  background: #444;
-  padding: 20px;
-  border-radius: 8px;
-  width: 25%;
-`;
-
-const PanelHeading = styled.h3`
-  font-size: 1.8em;
-  color: #ff3399;
-`;
-
-const PanelParagraph = styled.p`
-  font-size: 1.2em;
-  color: #fff;
-`;
-
-const AchievementsSection = styled.section`
-  background-color: #222;
-  padding: 40px 20px;
-  text-align: center;
-`;
-
-const AchievementsHeading = styled.h2`
-  font-size: 2em;
-  margin-bottom: 20px;
-`;
-
-const AchievementsList = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-`;
-
-const Achievement = styled.div`
-  background: #444;
-  padding: 20px;
-  margin: 10px;
-  width: 30%;
-  border-radius: 8px;
-`;
-
-const AchievementHeading = styled.h3`
-  font-size: 1.5em;
-  color: #ff3399;
-`;
-
-const UnlockButton = styled.button`
-  background-color: #00ccff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1.2em;
-  cursor: pointer;
-  border-radius: 5px;
-`;
-
-const CommunitySection = styled.section`
-  padding: 40px 20px;
-  text-align: center;
-  background-color: #333;
-`;
-
-const CommunityHeading = styled.h2`
-  font-size: 2em;
-  margin-bottom: 20px;
-`;
-
-const JoinButton = styled.button`
-  background-color: #ff66cc;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1.2em;
-  cursor: pointer;
-  border-radius: 5px;
-`;
-
-const Home: NextPage = () => {
+const Home = () => {
   return (
-    <Container>
-    <Navigation />
-      {/* Hero Section */}
-      <HeroSection>
-        <HeroContent>
-          <HeroHeading>Welcome to Diabetes360: Level Up Your Health!</HeroHeading>
-          <HeroParagraph>The ultimate game plan for managing your diabetes—track your sugar levels, build better habits, and score your way to healthier living!</HeroParagraph>
-          <StartButton>Start Your Adventure!</StartButton>
-        </HeroContent>
-      </HeroSection>
+    <div className="min-h-screen bg-sky-400 p-8 text-white font-mono relative overflow-hidden" style={{
+      backgroundImage: 'linear-gradient(transparent 95%, #7dd3fc 95%), linear-gradient(90deg, transparent 95%, #7dd3fc 95%)',
+      backgroundSize: '40px 40px'
+    }}>
+      <Navigation />
+      
+      {/* Floating Coins (decorative) */}
+      <h1 className="text-4xl font-bold text-center mb-8" 
+          style={{ textShadow: '3px 3px 0px #0369a1', padding: '20px 20px 20px' }}>
+      </h1>
+      <div className="absolute top-20 right-20 animate-bounce text-amber-200 text-4xl opacity-80">●</div>
+      <div className="absolute top-40 left-32 animate-bounce text-amber-200 text-4xl opacity-80" style={{ animationDelay: '0.5s' }}>●</div>
+      <div className="absolute bottom-20 right-40 animate-bounce text-amber-200 text-4xl opacity-80" style={{ animationDelay: '0.3s' }}>●</div>
 
-      {/* Features Section */}
-      <FeaturesSection>
-        <FeaturesHeading>Your Diabetes Quest Starts Here!</FeaturesHeading>
-        <FeaturePanels>
-          <Panel>
-            <PanelHeading>Blood Sugar Tracker</PanelHeading>
-            <PanelParagraph>Track your progress, see the high scores, and improve your gameplay with your blood sugar readings!</PanelParagraph>
-          </Panel>
-          <Panel>
-            <PanelHeading>Meal Planner</PanelHeading>
-            <PanelParagraph>Choose your power-ups and avoid the sugar traps with healthy meal plans!</PanelParagraph>
-          </Panel>
-          <Panel>
-            <PanelHeading>Exercise Tracker</PanelHeading>
-            <PanelParagraph>Boost your energy and stamina with custom workouts tailored to your needs!</PanelParagraph>
-          </Panel>
-        </FeaturePanels>
-      </FeaturesSection>
+      {/* Header */}
+      <header className="text-center mb-12">
+        <h1 className="text-6xl font-bold mb-4 p-6 rounded-lg inline-block" 
+            style={{ 
+              background: 'linear-gradient(#ef4444, #dc2626)',
+              textShadow: '4px 4px 0px #991b1b',
+              border: '4px solid #fff',
+              opacity: 0.9
+            }}>
+          DIABETES WORLD
+        </h1>
+        <p className="text-2xl text-white" style={{ textShadow: '2px 2px 0px #0369a1' }}>
+          ★ Your Health Adventure Begins Here! ★
+        </p>
+      </header>
 
-      {/* Achievements Section */}
-      <AchievementsSection>
-        <AchievementsHeading>Unlock Achievements & Rewards!</AchievementsHeading>
-        <AchievementsList>
-          <Achievement>
-            <AchievementHeading>Sugar Level Boss</AchievementHeading>
-            <p>Achieve a week of stable blood sugar levels.</p>
-          </Achievement>
-          <Achievement>
-            <AchievementHeading>Meal Master</AchievementHeading>
-            <p>Log 10 days of meals consistently.</p>
-          </Achievement>
-          <Achievement>
-            <AchievementHeading>Fitness Fanatic</AchievementHeading>
-            <p>Complete 30 days of exercise tracking.</p>
-          </Achievement>
-        </AchievementsList>
-        <UnlockButton>Unlock Your First Badge!</UnlockButton>
-      </AchievementsSection>
+      {/* Main Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Info Boxes styled like Mario blocks */}
+        {[
+          { icon: Book, title: "WORLD 1-1", subtitle: "WHAT IS DIABETES?", desc: "Jump in to learn about Type 1 and Type 2 diabetes!" },
+          { icon: Cookie, title: "WORLD 1-2", subtitle: "SUGAR LEVELS", desc: "Collect coins to track your blood sugar levels!" },
+          { icon: Apple, title: "WORLD 1-3", subtitle: "POWER-UPS", desc: "Find the right food power-ups for your journey!" },
+          { icon: Activity, title: "WORLD 1-4", subtitle: "EXERCISE MOVES", desc: "Learn the best moves to stay active!" },
+          { icon: Syringe, title: "WORLD 2-1", subtitle: "SPECIAL ITEMS", desc: "Master your medication power-ups!" },
+          { icon: Heart, title: "WORLD 2-2", subtitle: "DAILY QUESTS", desc: "Complete your daily diabetes management quests!" }
+        ].map((item, index) => (
+          <div key={index} 
+               className="transform hover:-translate-y-2 transition-transform duration-200"
+               style={{
+                 background: 'linear-gradient(#fcd34d, #f59e0b)',
+                 border: '4px solid #fff',
+                 boxShadow: '4px 4px 0px #92400e',
+                 borderRadius: '8px',
+                 opacity: 0.9
+               }}>
+            <div className="p-6">
+              <div className="text-sm mb-2" style={{ textShadow: '1px 1px 0px #92400e' }}>{item.title}</div>
+              <div className="flex items-center mb-4">
+                <item.icon className="w-8 h-8 mr-2" />
+                <h2 className="text-xl font-bold" style={{ textShadow: '2px 2px 0px #92400e' }}>{item.subtitle}</h2>
+              </div>
+              <p className="text-white">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
 
-      {/* Community Section */}
-      <CommunitySection>
-        <CommunityHeading>Join the Diabetes360 Crew!</CommunityHeading>
-        <p>Join our community of diabetes players! Share your progress, ask questions, and get support from fellow players who are leveling up their health.</p>
-        <JoinButton>Join the Forum</JoinButton>
-      </CommunitySection>
-    </Container>
+      {/* Footer */}
+      <footer className="mt-12 text-center">
+        <div className="p-4 rounded-lg inline-block" 
+             style={{
+               background: 'linear-gradient(#34d399, #059669)',
+               border: '4px solid #fff',
+               boxShadow: '4px 4px 0px #065f46',
+               opacity: 0.9
+             }}>
+          <p className="mb-2 text-xl" style={{ textShadow: '2px 2px 0px #065f46' }}>
+            ⭐ EMERGENCY WARP PIPE: 1-800-DIABETES ⭐
+          </p>
+          <p className="text-sm">Press B to Go Back | Press A to Select | Press START for Help</p>
+        </div>
+      </footer>
+    </div>
   );
 };
 
