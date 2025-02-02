@@ -27,7 +27,7 @@ const SignupPage = () => {
           boxShadow: '4px 4px 0px #92400e',
           borderRadius: '8px',
           opacity: 0.9,
-           padding: '80px 20px 20px'
+           padding: '20px 20px 20px'
         }}>
           <form onSubmit={handleSubmit} className="p-6 space-y-4">
             <h2 className="text-2xl font-bold text-center mb-6" 

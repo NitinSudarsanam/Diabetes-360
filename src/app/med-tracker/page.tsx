@@ -1,113 +1,142 @@
 "use client"
 
 import React, { useState } from 'react';
-import { Pill, Plus, Check, X } from 'lucide-react';
 import Navigation from '@/app/components/Navigation';
+import { Syringe, PlusCircle, Trash2 } from 'lucide-react';
 
-const MedicationTrackerPage = () => {
+const AddMedication = () => {
   const [medications, setMedications] = useState([
-    { id: 1, name: 'Metformin', dosage: '500mg', time: '08:00', taken: false },
-    { id: 2, name: 'Insulin', dosage: '10 units', time: '12:00', taken: false }
+    { id: 1, name: "Insulin Shot", details: "Fast-acting insulin before meals.", dosage: "10 units", taken: false },
+    { id: 2, name: "Metformin", details: "Helps control blood sugar levels.", dosage: "500 mg", taken: false },
   ]);
 
-  const [newMed, setNewMed] = useState({ name: '', dosage: '', time: '' });
+  const [newMedName, setNewMedName] = useState("");
+  const [newMedDetails, setNewMedDetails] = useState("");
+  const [newDosage, setNewDosage] = useState("");
 
-  const handleAddMedication = () => {
-    setMedications([...medications, { ...newMed, id: Date.now(), taken: false }]);
-    setNewMed({ name: '', dosage: '', time: '' });
+  const addMedication = () => {
+    if (newMedName.trim() === "" || newMedDetails.trim() === "" || newDosage.trim() === "") return;
+    setMedications([...medications, {
+      id: Date.now(),
+      name: newMedName,
+      details: newMedDetails,
+      dosage: newDosage,
+      taken: false
+    }]);
+    setNewMedName("");
+    setNewMedDetails("");
+    setNewDosage("");
   };
 
-  const toggleTaken = (id: number) => {
+  const toggleMedication = (id: number) => {
     setMedications(medications.map(med =>
       med.id === id ? { ...med, taken: !med.taken } : med
     ));
   };
 
-  return (
-    <div className="min-h-screen bg-sky-400 p-8 text-white font-mono">
-      <Navigation />
-      <h1 className="text-4xl font-bold text-center mb-8" 
-          style={{ textShadow: '3px 3px 0px #0369a1', padding: '80px 20px 20px' }}>
-        POWER-UP TRACKER
-      </h1>
+  const removeMedication = (id: number) => {
+    setMedications(medications.filter(med => med.id !== id));
+  };
 
-      {/* Add New Medication */}
-      <div className="max-w-2xl mx-auto mb-8" style={{
-        background: 'linear-gradient(#fcd34d, #f59e0b)',
-        border: '4px solid #fff',
-        boxShadow: '4px 4px 0px #92400e',
-        borderRadius: '8px',
-        opacity: 0.9
+  return (
+    <div className="min-h-screen bg-sky-400 p-8 text-white font-mono relative flex flex-col items-center"
+      style={{
+        backgroundImage: 'linear-gradient(transparent 95%, #7dd3fc 95%), linear-gradient(90deg, transparent 95%, #7dd3fc 95%)',
+        backgroundSize: '40px 40px'
       }}>
-        <div className="p-6 space-y-4">
-          <h2 className="text-xl font-bold mb-4">Add New Power-Up</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <input
-              type="text"
-              placeholder="Name"
-              className="p-2 rounded text-black"
-              value={newMed.name}
-              onChange={(e) => setNewMed({...newMed, name: e.target.value})}
-            />
-            <input
-              type="text"
-              placeholder="Dosage"
-              className="p-2 rounded text-black"
-              value={newMed.dosage}
-              onChange={(e) => setNewMed({...newMed, dosage: e.target.value})}
-            />
-            <input
-              type="time"
-              className="p-2 rounded text-black"
-              value={newMed.time}
-              onChange={(e) => setNewMed({...newMed, time: e.target.value})}
-            />
-          </div>
-          <button
-            onClick={handleAddMedication}
-            className="flex items-center justify-center w-full p-2 rounded font-bold"
-            style={{
-              background: 'linear-gradient(#34d399, #059669)',
-              border: '2px solid #fff',
-              boxShadow: '2px 2px 0px #065f46'
-            }}
-          >
-            <Plus className="w-5 h-5 mr-2" /> Add Power-Up
-          </button>
+      <Navigation />
+
+      {/* Header */}
+      <h1 className="text-4xl font-bold text-center mb-8" 
+          style={{ textShadow: '3px 3px 0px #0369a1', padding: '20px 20px 20px' }}>
+      </h1>
+      <header className="text-center mb-12">
+        <h1 className="text-5xl font-bold mb-4 p-6 rounded-lg inline-block"
+          style={{
+            background: 'linear-gradient(#ef4444, #dc2626)',
+            textShadow: '4px 4px 0px #991b1b',
+            border: '4px solid #fff',
+            opacity: 0.9
+          }}>
+          ADD MEDICATION
+        </h1>
+        <p className="text-lg text-white" style={{ textShadow: '2px 2px 0px #0369a1' }}>
+          ★ Tap to take your medication! Click the trash icon to remove it. ★
+        </p>
+      </header>
+
+      {/* Add New Medication (Wider & Centered) */}
+      <div className="mb-12 bg-yellow-500 p-6 rounded-lg text-center shadow-lg border-4 border-white w-full max-w-2xl"
+        style={{ boxShadow: '4px 4px 0px #92400e' }}>
+        <h2 className="text-2xl font-bold mb-4">Add a New Medication</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <input
+            type="text"
+            className="p-2 border-2 border-white rounded-lg text-black w-full"
+            placeholder="Medication Name"
+            value={newMedName}
+            onChange={(e) => setNewMedName(e.target.value)}
+          />
+          <input
+            type="text"
+            className="p-2 border-2 border-white rounded-lg text-black w-full"
+            placeholder="Details (e.g., time)"
+            value={newMedDetails}
+            onChange={(e) => setNewMedDetails(e.target.value)}
+          />
+          <input
+            type="text"
+            className="p-2 border-2 border-white rounded-lg text-black w-full"
+            placeholder="Dosage (e.g., 500mg)"
+            value={newDosage}
+            onChange={(e) => setNewDosage(e.target.value)}
+          />
         </div>
+        <button onClick={addMedication} className="mt-4 bg-green-500 p-3 rounded-lg flex items-center justify-center text-white w-full">
+          <PlusCircle className="w-6 h-6 mr-2" /> Add Medication
+        </button>
       </div>
 
-      {/* Medication List */}
-      <div className="max-w-2xl mx-auto space-y-4">
+      {/* Medication List (Stacked & Centered) */}
+      <div className="w-full max-w-lg space-y-4">
         {medications.map(med => (
-          <div
-            key={med.id}
-            className="p-4 rounded flex items-center justify-between"
-            style={{
-              background: med.taken ? 'linear-gradient(#34d399, #059669)' : 'linear-gradient(#60a5fa, #2563eb)',
-              border: '3px solid #fff',
-              boxShadow: '3px 3px 0px #1e40af',
-              opacity: 0.9
-            }}
-          >
-            <div className="flex items-center">
-              <Pill className="w-6 h-6 mr-3" />
-              <div>
-                <h3 className="font-bold">{med.name}</h3>
-                <p className="text-sm">{med.dosage} - {med.time}</p>
+          <div key={med.id}
+            className={`p-4 rounded-lg cursor-pointer transition-all duration-200 flex justify-between items-center
+            ${med.taken ? "bg-green-500" : "bg-yellow-500"} border-4 border-white shadow-lg`}
+            style={{ boxShadow: '4px 4px 0px #92400e' }}
+            onClick={() => toggleMedication(med.id)}>
+            <div className="flex items-center space-x-4 w-full">
+              <Syringe className="w-8 h-8" />
+              <div className="flex-1">
+                <h2 className="text-xl font-bold">{med.name}</h2>
+                <p className="text-sm">{med.details}</p>
+                <p className="text-sm font-semibold">Dosage: {med.dosage}</p>
               </div>
+              <button onClick={(e) => { e.stopPropagation(); removeMedication(med.id); }} className="text-white">
+                <Trash2 className="w-6 h-6" />
+              </button>
             </div>
-            <button
-              onClick={() => toggleTaken(med.id)}
-              className={`p-2 rounded ${med.taken ? 'bg-green-700' : 'bg-blue-700'}`}
-            >
-              {med.taken ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
-            </button>
           </div>
         ))}
       </div>
+
+      {/* Footer */}
+      <footer className="mt-12 text-center">
+        <div className="p-4 rounded-lg inline-block"
+          style={{
+            background: 'linear-gradient(#34d399, #059669)',
+            border: '4px solid #fff',
+            boxShadow: '4px 4px 0px #065f46',
+            opacity: 0.9
+          }}>
+          <p className="mb-2 text-xl" style={{ textShadow: '2px 2px 0px #065f46' }}>
+            ⭐ KEEP UP WITH YOUR MEDS! ⭐
+          </p>
+          <p className="text-sm">Press B to Go Back | Press A to Mark Taken | Press ❌ to Remove</p>
+        </div>
+      </footer>
     </div>
   );
 };
 
-export default MedicationTrackerPage;
+export default AddMedication;

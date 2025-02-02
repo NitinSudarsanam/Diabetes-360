@@ -3,7 +3,7 @@ import Link from "next/link";
 const Navigation: React.FC = () => {
   return (
     <nav style={styles.navbar}>
-      <div style={styles.logo}>Diabetes 360</div>
+      <div style={styles.logo}><a href="/">Diabetes 360</a></div>
       <ul style={styles.navLinks}>
         <li><Link href="/" style={styles.link}>🏠 Home</Link></li>
         <li><Link href="/dashboard" style={styles.link}>📊 Dashboard</Link></li>
