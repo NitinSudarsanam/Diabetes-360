@@ -20,7 +20,7 @@ const LoginPage: NextPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/login",
+        "https://fgyis6cpq9.us-east-1.awsapprunner.com/login",
         { email, password },
         { headers: { "Content-Type": "application/json" } }
       );

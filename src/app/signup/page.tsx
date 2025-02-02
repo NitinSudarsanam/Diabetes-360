@@ -47,7 +47,7 @@ const SignUpPage: React.FC = () => {
 
       // Send the formData to the backend via POST request
       const response = await axios.post(
-        "http://localhost:8080/api/users",
+        "https://fgyis6cpq9.us-east-1.awsapprunner.com/api/users",
         formData,
         {
           headers: {
