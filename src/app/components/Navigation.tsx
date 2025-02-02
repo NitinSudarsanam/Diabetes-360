@@ -9,7 +9,6 @@ const Navigation: React.FC = () => {
 
   const handleLogout = () => {
     setGlobalState({ isAuthenticated: false });
-    localStorage.removeItem("authToken"); // Clear token from localStorage
   };
 
   return (
