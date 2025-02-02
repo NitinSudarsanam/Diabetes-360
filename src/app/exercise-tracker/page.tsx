@@ -1,11 +1,11 @@
 "use client"
 
-import React from 'react';
-import { 
-  Activity, 
-  Dumbbell, 
-  Timer, 
-  Flame, 
+import React, { useEffect } from 'react';
+import {
+  Activity,
+  Dumbbell,
+  Timer,
+  Flame,
   Trophy,
   Calendar,
   CalendarCheck,
@@ -13,6 +13,12 @@ import {
   ArrowDown
 } from 'lucide-react';
 import Navigation from '@/app/components/Navigation';
+import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend } from 'chart.js';
+
+// Register necessary components
+ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
+
 
 const ExerciseTracker = () => {
   const stats = {
@@ -31,14 +37,110 @@ const ExerciseTracker = () => {
     { name: "Lunges", sets: "3", reps: "10", diff: "-2" }
   ];
 
+  const PixelArtGraph: React.FC = () => {
+    useEffect(() => {
+      // Load pixel font dynamically
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap';
+      link.onload = () => {
+        ChartJS.defaults.font.family = 'Press Start 2P';
+      };
+      document.head.appendChild(link);
+      return () => {
+        document.head.removeChild(link);
+      };
+    }, []);
+
+    const data = {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+      datasets: [
+        {
+          label: 'Blood Sugar (mg/dL)',
+          data: [80, 150, 100, 200, 130],
+          borderColor: '#f59e0b', // Golden Yellow
+          backgroundColor: '#7dd3fc', // Neon green dots
+          borderWidth: 10, // Thicker line
+          pointRadius: 12, // Big square dots
+          pointStyle: 'rect', // Square points (for pixel look)
+          pointBackgroundColor: '#7dd3fc', // Cyan dots
+          pointBorderColor: '#bae6fd', // Darker Cyan
+          pointBorderWidth: 4,
+        },
+      ],
+    };
+
+    const options = {
+      responsive: true,
+      plugins: {
+      legend: {
+        display: false, // Hide legend
+      },
+      tooltip: {
+        enabled: false, // Disable tooltips
+      },
+      },
+      scales: {
+      x: {
+        grid: {
+        color: 'white', // White grid for retro feel
+        lineWidth: 3,
+        },
+        ticks: {
+        font: { family: 'Courier New', size: 14, weight: 'bold' as const },
+        color: 'white',
+        },
+        title: {
+        display: true,
+        text: 'Months',
+        font: { family: 'Courier New', size: 16, weight: 'bold' as const },
+        color: 'white',
+        },
+      },
+      y: {
+        grid: {
+        color: 'white', // White grid for retro feel
+        lineWidth: 3,
+        },
+        ticks: {
+        font: { family: 'Courier New', size: 14, weight: 'bold' as const },
+        color: 'white',
+        },
+        title: {
+        display: true,
+        text: 'Blood Sugar (mg/dL)',
+        font: { family: 'Courier New', size: 16, weight: 'bold' as const },
+        color: 'white',
+        },
+      },
+      },
+      elements: {
+      line: {
+        tension: 0, // No smoothing for pixelated look
+      },
+      point: {
+        hoverRadius: 12, // Keep the same size when hovered
+      },
+      },
+    };
+
+    return (
+      <div style={{ padding: 20 }}>
+        <h2 style={{ color: 'white', fontFamily: 'Press Start 2P', fontWeight: 'bold', fontSize: '24px' }}> Blood Sugar By Month</h2>
+        <Line data={data} options={options} />
+      </div>
+    );
+  };
+
+
   return (
     <div className="min-h-screen bg-sky-400 p-8 text-white font-mono" style={{
       backgroundImage: 'linear-gradient(transparent 95%, #7dd3fc 95%), linear-gradient(90deg, transparent 95%, #7dd3fc 95%)',
       backgroundSize: '40px 40px'
     }}>
       <Navigation />
-      <h1 className="text-4xl font-bold text-center mb-8" 
-          style={{ textShadow: '3px 3px 0px #0369a1', padding: '80px 20px 20px' }}>
+      <h1 className="text-4xl font-bold text-center mb-8"
+        style={{ textShadow: '3px 3px 0px #0369a1', padding: '80px 20px 20px' }}>
         EXERCISE LOG
       </h1>
 
@@ -73,12 +175,18 @@ const ExerciseTracker = () => {
             </div>
           ))}
         </div>
+        <div className="rounded-lg p-6 mb-8" style={{
+          background: 'linear-gradient(#60a5fa,rgb(49, 107, 232))',
+          border: '4px solid #fff',
+          boxShadow: '4px 4px 0px #1e40af',
+          opacity: 0.9
+        }}><PixelArtGraph /></div>
 
         {/* Exercise Progress */}
         <div className="rounded-lg p-6 mb-8" style={{
-          background: 'linear-gradient(#60a5fa, #2563eb)',
+          background: 'linear-gradient(#34d399, #059669)',
           border: '4px solid #fff',
-          boxShadow: '4px 4px 0px #1e40af',
+          boxShadow: '4px 4px 0px #065f46',
           opacity: 0.9
         }}>
           <h2 className="text-2xl font-bold mb-4" style={{ textShadow: '2px 2px 0px #1e40af' }}>
@@ -90,9 +198,9 @@ const ExerciseTracker = () => {
                 key={index}
                 className="p-4 rounded"
                 style={{
-                  background: 'linear-gradient(#34d399, #059669)',
+                  background: 'linear-gradient(#60a5fa, #2563eb)',
                   border: '2px solid #fff',
-                  boxShadow: '2px 2px 0px #065f46'
+                  boxShadow: '2px 2px 0px #1e40af'
                 }}
               >
                 <div className="flex items-center justify-between">
