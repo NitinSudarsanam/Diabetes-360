@@ -16,7 +16,7 @@ const LoginPage: NextPage = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(""); // Clear previous erro rs
+    setError(""); // Clear previous errors
   
     try {
       const response = await axios.post(
