@@ -8,6 +8,8 @@ const Navigation: React.FC = () => {
   const { globalState, setGlobalState } = useGlobalState();
 
   const handleLogout = () => {
+    // go to login page
+    window.location.href = "/login";
     setGlobalState({ isAuthenticated: false });
     localStorage.removeItem("authToken"); // Clear token from localStorage
   };
