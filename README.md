@@ -161,7 +161,7 @@ Turbopack            → Next.js build optimization
 ┌─────────────────────────────────────────────────────────────┐
 │                   External Services                         │
 │  ┌──────────────────┐        ┌──────────────────────┐       │
-│  │ Google Gemini AI │        │   Database (Implied) │       │
+│  │ Google Gemini AI │        │   MongoDB Database   │       │
 │  │ Meal Planning    │        │   User Data Storage  │       │
 │  └──────────────────┘        └──────────────────────┘       │
 └─────────────────────────────────────────────────────────────┘
