@@ -6,6 +6,7 @@
 ![Next.js](https://img.shields.io/badge/Next.js-15.1.6-black?style=for-the-badge&logo=next.js&logoColor=white)
 ![React](https://img.shields.io/badge/React-19.0.0-blue?style=for-the-badge&logo=react&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-green?style=for-the-badge&logo=mongodb&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 **A gamified diabetes management platform that transforms health tracking into an engaging, retro-style experience.**
@@ -120,6 +121,7 @@ Lucide React          → Modern icon library
 ### Backend & Services
 ```
 AWS App Runner        → Serverless backend hosting
+MongoDB               → NoSQL database for user data
 JWT Authentication    → Secure token-based auth
 Axios                 → HTTP client for API calls
 Google Gemini AI      → AI-powered meal recommendations
@@ -159,11 +161,13 @@ Turbopack            → Next.js build optimization
 └─────────────────────────────────────────────────────────────┘
                             ↕
 ┌─────────────────────────────────────────────────────────────┐
-│                   External Services                         │
+│                   Data & Services Layer                     │
 │  ┌──────────────────┐        ┌──────────────────────┐       │
-│  │ Google Gemini AI │        │   MongoDB Database   │       │
-│  │ Meal Planning    │        │   User Data Storage  │       │
-│  └──────────────────┘        └──────────────────────┘       │
+│  │  MongoDB Atlas   │        │  Google Gemini AI    │       │
+│  │  User Profiles   │        │  Meal Planning       │       │
+│  │  Health Data     │        │  AI Recommendations  │       │
+│  │  Medications     │        └──────────────────────┘       │
+│  └──────────────────┘                                       │
 └─────────────────────────────────────────────────────────────┘
 ```
 
